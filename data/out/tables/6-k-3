@@ -1,0 +1,40 @@
+k, Cond Exp Entries, Cond Exp One Interaction, Cond Exp Iteration
+5, 0, 0, 0
+6, 729, 729, 729
+7, 1048, 988, 995
+8, 1476, 1448, 1422
+9, 1842, 1767, 1725
+10, 2164, 2095, 2030
+k, DensityMultCandidateRow, HybridMultiCandidate
+k, DensityMultCandidateRow, HybridMultiCandidate
+15, 3410, 3380
+15, 3410, 3380
+16, 3652, 3596
+16, 3652, 3596
+k, DensityMultCandidateRow, HybridMultiCandidate, BestOfKDensityMultiCandidateHybrid
+7, 1009, 1009, 993
+8, 1430, 1430, 1423
+9, 1739, 1740, 1743
+10, 2061, 2045, 2049
+11, 2354, 2349, 2333
+12, 2656, 2625, 2621
+13, 2919, 2887, 2883
+14, 3162, 3139, 3134
+k, BestOfKDensityMultiCandidateHybrid
+15, 3375
+16, 3598
+k, CondExpEntries, CondExpIterPE
+10, 2166, 2148
+11, 2485, 2490
+12, 2778, 2766
+13, 3054, 3045
+14, 3313, 3309
+15, 3559, 3540
+16, 3785, 3788
+17, 4015, 3995
+18, 4238, 4215
+19, 4439, 4417
+k, DensityMultCandidateRow
+17, 3855
+18, 4072
+19, 4273

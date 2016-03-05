@@ -1,0 +1,6 @@
+bin/*
+lib/*
+*.jar
+.settings/
+.classpath
+.project

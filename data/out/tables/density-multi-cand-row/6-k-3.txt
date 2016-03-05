@@ -1,0 +1,4 @@
+k, DensityMultCandidateRow
+17, 3855
+18, 4072
+19, 4273

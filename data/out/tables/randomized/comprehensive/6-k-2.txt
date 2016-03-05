@@ -1,0 +1,5 @@
+k, Uniform Random, Proportional Random, Repeated Random
+7, 218, 90, 73
+8, 283, 137, 117
+9, 374, 176, 147
+10, 415, 217, 176

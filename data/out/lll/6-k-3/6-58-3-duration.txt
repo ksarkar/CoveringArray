@@ -1,0 +1,6 @@
+C:\Users\ksarkar1\Documents\_academic\covering-array\CoveringArray>java -jar LLL-1.jar 6 58 3
+LLL
+Wed Nov 26 15:10:09 MST 2014
+Iteration: 0
+Fri Dec 05 18:44:42 MST 2014
+LLL Done

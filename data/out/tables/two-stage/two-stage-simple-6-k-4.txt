@@ -1,0 +1,6 @@
+k, TwoStageSimple
+k, TwoStageSimple
+39, 65433
+k, TwoStageColoring-3-times
+39, 57924
+40, 58570
