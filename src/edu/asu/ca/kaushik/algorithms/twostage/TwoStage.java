@@ -20,6 +20,7 @@ import java.util.Random;
 import java.util.Set;
 
 import edu.asu.ca.kaushik.algorithms.CAGenAlgo;
+import edu.asu.ca.kaushik.algorithms.structures.ArrayCA;
 import edu.asu.ca.kaushik.algorithms.structures.CA;
 import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator;
 import edu.asu.ca.kaushik.algorithms.structures.ColGroup;
@@ -115,12 +116,12 @@ public abstract class TwoStage implements CAGenAlgo {
 		
 		((ListCAExt)fullCA).copyInfo(remCA);
 		
-		/*
-		LLLCA testCA = new LLLCA(fullCA);
+		
+		ArrayCA testCA = new ArrayCA(fullCA);
 		ColGroup cols = new ColGroup(new int[0]);
 		System.out.println("\nThis " + (testCA.isCompleteCA(cols) ? "is a CA" 
 				: "is not a CA\n"));
-		*/
+		
 		
 		return fullCA;
 	}

@@ -81,6 +81,7 @@ public class ColGrIterator1 implements ColGrIteratorInterface {
 	@Override
 	public void rewind() {
 		this.count = 1;
+		this.initiateCols();
 	}
 
 	/**

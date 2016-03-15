@@ -79,7 +79,7 @@ public class TwoStageColoring extends TwoStage {
 	@Override
 	protected void secondStage(ListCAExt remCA) {
 		ConflictGraph conflictGraph = new ConflictGraph(this.uncovInts);
-		conflictGraph.color(remCA);
+		conflictGraph.color1(remCA);
 	}
 	
 	@Override
@@ -110,7 +110,7 @@ public class TwoStageColoring extends TwoStage {
 		algoList.add(new TwoStageColoring(2, 2));
 		
 		OutputFormatter formatter = new TableOutputFormatter("data\\out\\tables\\two-stage"
-				, "two-stage-simple");
+				, "two-stage-coloring");
 		
 		Runner runner = new Runner(formatter);
 		runner.setParam(t, v, k1, k2);

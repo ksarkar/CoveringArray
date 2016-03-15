@@ -127,4 +127,9 @@ public class ListCA implements PartialCA {
 			this.addRow(caIt.next());
 		}
 	}
+	
+	public Integer[] getRow(int i) {
+		assert(i < this.ca.size());
+		return this.ca.get(i);
+	}
 }

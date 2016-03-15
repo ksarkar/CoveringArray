@@ -103,10 +103,10 @@ public class TwoStageDensity extends TwoStage {
 		
 		List<CAGenAlgo> algoList = new ArrayList<CAGenAlgo>();
 		
-		algoList.add(new TwoStageDensity(2, 2));
+		algoList.add(new TwoStageDensity(3, 2));
 		
 		OutputFormatter formatter = new TableOutputFormatter("data\\out\\tables\\two-stage"
-				, "two-stage-simple");
+				, "two-stage-density");
 		
 		Runner runner = new Runner(formatter);
 		runner.setParam(t, v, k1, k2);

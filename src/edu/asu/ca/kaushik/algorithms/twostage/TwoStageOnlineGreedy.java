@@ -153,10 +153,10 @@ public class TwoStageOnlineGreedy extends TwoStage{
 		
 		List<CAGenAlgo> algoList = new ArrayList<CAGenAlgo>();
 		
-		algoList.add(new TwoStageOnlineGreedy(2, 1));
+		algoList.add(new TwoStageOnlineGreedy(2, 2));
 		
 		OutputFormatter formatter = new TableOutputFormatter("data\\out\\tables\\two-stage"
-				, "two-stage-simple-onlineGreedy");
+				, "two-stage-onlineGreedy");
 		
 		Runner runner = new Runner(formatter);
 		runner.setParam(t, v, k1, k2);

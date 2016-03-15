@@ -1,0 +1,16 @@
+k, TwoStageColoring-3-times
+20, 167
+21, 171
+k, TwoStageColoring-3-times
+20, 166
+21, 175
+k, TwoStageColoring-3-times
+20, 166
+21, 174
+k, TwoStageColoring-3-times
+k, TwoStageColoring-3-times
+20, 166
+21, 175
+k, TwoStageColoring-3-times
+20, 166
+21, 175

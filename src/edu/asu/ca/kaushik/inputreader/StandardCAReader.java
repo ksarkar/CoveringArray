@@ -24,6 +24,7 @@ import java.util.Scanner;
 import edu.asu.ca.kaushik.algorithms.derandomized.CondExpEntries;
 import edu.asu.ca.kaushik.algorithms.derandomized.CondExpIteration;
 import edu.asu.ca.kaushik.algorithms.derandomized.pe.CondExpIterPE;
+import edu.asu.ca.kaushik.algorithms.structures.ArrayCA;
 import edu.asu.ca.kaushik.algorithms.structures.CA;
 import edu.asu.ca.kaushik.algorithms.structures.ColGroup;
 import edu.asu.ca.kaushik.algorithms.structures.InteractionGraph;
@@ -160,7 +161,7 @@ public class StandardCAReader implements InputCAReader {
 		String inFile = "data\\out\\explicit-arrays\\3-k-2\\3-50-2-int-sampled-f1000.txt";
 		PartialCA ca = reader.readCA(inFile);
 		System.out.println("Reading input file done.");
-		LLLCA nca = new LLLCA(ca);
+		ArrayCA nca = new ArrayCA(ca);
 		ColGroup cols = null;
 		String res = nca.isCompleteCA(cols) ? "A" : "NOT A";
 		System.out.println("Checking done!\n");

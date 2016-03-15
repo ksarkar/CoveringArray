@@ -60,19 +60,15 @@ public class Vertex {
 	}
 	
 	public int greedyColor() {
-		//List<Integer> colors = new ArrayList<Integer>();
 		Set<Integer> colors = new HashSet<Integer>();
+		int max = -1;
 		for (Vertex n : this.neighbors) {
 			Integer nCol = n.getColor();
 			if (nCol != -1) {
 				colors.add(nCol);
-			}
-		}
-		
-		int max = -1;
-		for (Integer c : colors) {
-			if (c > max) {
-				max = c;
+				if (nCol > max) {
+					max = nCol;
+				}
 			}
 		}
 		

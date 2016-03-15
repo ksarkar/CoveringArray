@@ -52,19 +52,19 @@ public class ConflictGraph {
 	/**
 	 * Builds the adjacency list initially
 	 */
-	private void addEdges() {
-		for (Vertex u : this.vertices) {
-			for (Vertex v : this.vertices) {
-				if (!u.equals(v)) {
-					if (u.isAdjacent(v)) {
-						u.addNeighbor(v);
-						this.numEdges = this.numEdges + 1;
-					}
+	private void addEdges() {		
+		int n = this.vertices.size();
+		for (int i = 0; i < n; i++) {
+			Vertex u = this.vertices.get(i);
+			for (int j = i+1 ; j < n; j++) {
+				Vertex v = this.vertices.get(j);
+				if (u.isAdjacent(v)) {
+					u.addNeighbor(v);
+					v.addNeighbor(u);
+					this.numEdges = this.numEdges + 1;
 				}
 			}
 		}
-		
-		this.numEdges = this.numEdges / 2;
 	}
 	
 	/**
@@ -182,17 +182,6 @@ public class ConflictGraph {
 		return;
 	}
 
-	private static void getSmallestLastOrderRec(int n, Vertex[] slOrder,
-			List<List<Vertex>> vertices) {
-		
-		if(n >= 0){
-			Vertex minDeg = findDeleteMinDeg(vertices);
-			slOrder[n] = minDeg;
-			getSmallestLastOrder(n-1, slOrder, vertices);
-		}
-		return;
-	}
-
 	private static Vertex findDeleteMinDeg(List<List<Vertex>> vertices) {
 		Vertex minDegVert = null;
 		int min = vertices.size();
@@ -256,6 +245,79 @@ public class ConflictGraph {
 			row[cols[i]] = syms[i];
 		}
 		
+	}
+
+	public void color1(ListCAExt remCA) {
+		Vertex[] slOrder = this.smallestLastOrder1();
+		
+		int numRows = 0;
+		int n = slOrder.length;
+		int k = remCA.getK();
+		for (int i = 0; i < n; i++) {
+			int c = slOrder[i].greedyColor();
+			if (c >= numRows) { 
+				Integer[] row = this.getRow(k);
+				this.modify(row, slOrder[i]);
+				remCA.addRow(row);
+				numRows++;
+			} else {
+				Integer[] row = remCA.getRow(c)	;
+				this.modify(row, slOrder[i]);
+			}
+		}
+	}
+
+	private Integer[] getRow(int k) {
+		Integer[] row = new Integer[k];
+		for (int i = 0; i < k; i++) {
+			row[i] = 0;
+		}
+		return row;
+	}
+
+	private void modify(Integer[] row, Vertex vertex) {
+		Interaction inter = vertex.getInteraction();
+		int[] cols = inter.getCols().getCols();
+		int[] syms = inter.getSyms().getSyms();
+		int t = cols.length;
+		for (int i = 0; i < t; i++) {
+			row[cols[i]] = syms[i];
+		}	
+		
+	}
+
+	private Vertex[] smallestLastOrder1() {
+		int n = this.vertices.size();
+		Vertex[] slOrder = new Vertex[n];
+		
+		for (int i = n - 1; i >= 0; i--) {
+			Vertex minDeg = this.findDeleteMinDeg1();
+			slOrder[i] = minDeg;
+		}
+		return slOrder;
+	}
+
+	private Vertex findDeleteMinDeg1() {
+		Vertex minDegVert = null;
+		int min = this.vertices.size();
+		int index = -1;
+		int i = 0;
+		for (Vertex v : this.vertices) {
+			int deg = v.getNeighbors().size();
+			if (deg < min) {
+				min = deg;
+				index = i;
+			}
+			i++;
+		}
+		
+		minDegVert = this.vertices.remove(index);
+		
+		for (Vertex v : this.vertices) {
+			v.getNeighbors().remove(minDegVert);	
+		}
+		
+		return minDegVert;
 	}
 
 }

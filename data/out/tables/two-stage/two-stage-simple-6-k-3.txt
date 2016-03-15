@@ -4,15 +4,14 @@ k, TwoStageSimple
 55, 13231
 56, 13312
 57, 13382
-k, TwoStageSimple
-k, TwoStageSimple
 58, 13490
-Java heap space out of memoryk, TwoStageOnlineColoring-3-times
+Java heap space out of memory
+k, TwoStageOnlineColoring-3-times
+53, 11716
+54, 11804
 k, TwoStageOnlineColoring-2-times
 53, 11968
 54, 12135
-53, 11716
 55, 12286
 56, 12429
-54, 11804
 57, 12562
