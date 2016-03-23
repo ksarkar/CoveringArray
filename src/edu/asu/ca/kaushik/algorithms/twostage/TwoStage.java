@@ -23,6 +23,7 @@ import edu.asu.ca.kaushik.algorithms.CAGenAlgo;
 import edu.asu.ca.kaushik.algorithms.structures.ArrayCA;
 import edu.asu.ca.kaushik.algorithms.structures.CA;
 import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator;
+import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator2;
 import edu.asu.ca.kaushik.algorithms.structures.ColGroup;
 import edu.asu.ca.kaushik.algorithms.structures.Helper;
 import edu.asu.ca.kaushik.algorithms.structures.Interaction;
@@ -34,14 +35,16 @@ import edu.asu.ca.kaushik.algorithms.structures.PartialCA;
 public abstract class TwoStage implements CAGenAlgo {
 	private static final int maxIteration = 20;
 	private int firstStage;
+	private int slackPercent;
 	
 	/**
 	 * 
 	 * @param flag What randomized algorithm to use in stage 1. Valid values: 0 -- uniform random, 
 	 * 1 -- re-sample only the last offending interaction, 2 -- re-sample all the offending interactions
 	 */
-	public TwoStage(int flag) {
+	public TwoStage(int flag, int sp) {
 		this.firstStage = flag;
+		this.slackPercent = sp;
 	}
 	
 	@Override
@@ -64,9 +67,10 @@ public abstract class TwoStage implements CAGenAlgo {
 		assert(k >= 2 * t);
 		int n = this.partialArraySize(t,k,v);
 		int numMinUncovInt = (int)Math.floor(Helper.expectNumUncovInt(t, k, v, n));
+		numMinUncovInt = (int) (1.0 + this.slackPercent/100) * numMinUncovInt;
 		long seed = 123456L;
 		LLLCA partialCa = new LLLCA(t, k, v, n, new Random());
-		ColGrIterator clGrIt = new ColGrIterator(t, k);
+		ColGrIterator clGrIt = new ColGrIterator2(t, k);
 		int uncovIntNum;
 		int colGrNum;
 		boolean enoughCovered;
@@ -117,10 +121,10 @@ public abstract class TwoStage implements CAGenAlgo {
 		((ListCAExt)fullCA).copyInfo(remCA);
 		
 		
-		ArrayCA testCA = new ArrayCA(fullCA);
+		/*ArrayCA testCA = new ArrayCA(fullCA);
 		ColGroup cols = new ColGroup(new int[0]);
 		System.out.println("\nThis " + (testCA.isCompleteCA(cols) ? "is a CA" 
-				: "is not a CA\n"));
+				: "is not a CA\n"));*/
 		
 		
 		return fullCA;

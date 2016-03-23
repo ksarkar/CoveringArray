@@ -19,6 +19,7 @@ import java.util.Date;
 
 import edu.asu.ca.kaushik.algorithms.structures.CA;
 import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator;
+import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator2;
 import edu.asu.ca.kaushik.algorithms.structures.ColGroup;
 import edu.asu.ca.kaushik.algorithms.structures.LLLCA;
 import edu.asu.ca.kaushik.outputformatter.CAWriter;
@@ -37,7 +38,7 @@ public class MTMethod extends LLL {
 	public CA generateCA(int t, int k, int v) {
 		assert(k >= 2 * t);
 		LLLCA ca = new LLLCA(t, k, v, this.N);
-		ColGrIterator clGrIt = new ColGrIterator(t, k);
+		ColGrIterator clGrIt = new ColGrIterator2(t, k);
 		boolean allCovered;
 		int iteration = 0;
 		int colGrNum = 0;

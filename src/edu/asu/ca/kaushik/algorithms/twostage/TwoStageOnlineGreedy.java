@@ -35,6 +35,7 @@ public class TwoStageOnlineGreedy extends TwoStage{
 	private int t;
 	private int k;
 	private int v;
+	private int slack;
 	
 	/**
 	 * 
@@ -42,15 +43,16 @@ public class TwoStageOnlineGreedy extends TwoStage{
 	 * @param firstStage What randomized algorithm to use in stage 1. Valid values: 0 -- uniform random, 
 	 * 1 -- re-sample only the last offending interaction, 2 -- re-sample all the offending interactions
 	 */
-	public TwoStageOnlineGreedy(int times, int firstStage) {
-		super(firstStage);
+	public TwoStageOnlineGreedy(int times, int firstStage, int sp) {
+		super(firstStage, sp);
 		this.times = times;
+		this.slack = sp;
 		//Should initialize second here. But don't know t,k,v yet.
 	}
 
 	@Override
 	public String getName() {
-		return new String("TwoStageOnlineGreedy-" + this.times + "-times");
+		return new String("TwoStageGreedy-" + this.times + "-times-" + this.slack + "-slack");
 	}
 
 	@Override
@@ -139,24 +141,27 @@ public class TwoStageOnlineGreedy extends TwoStage{
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		int t = 0,k1 = 0,k2 = 0,v = 0;
+		int t = 0, k1 = 0, k2 = 0, v = 0, times = 0, f = 0, s = 0;
 		
-		if (args.length == 4) {
+		if (args.length == 7) {
 			t = Integer.parseInt(args[0]);
 			v = Integer.parseInt(args[1]);
 			k1 = Integer.parseInt(args[2]);
 			k2 = Integer.parseInt(args[3]);
+			times = Integer.parseInt(args[4]);
+			f = Integer.parseInt(args[5]);
+			s = Integer.parseInt(args[6]);
 		} else {
-			System.err.println("Need four arguments- t, v, kStart and kEnd");
+			System.err.println("Need seven arguments- t, v, kStart, kEnd, times, firstStage and slack percent");
 			System.exit(1);
 		}
 		
 		List<CAGenAlgo> algoList = new ArrayList<CAGenAlgo>();
 		
-		algoList.add(new TwoStageOnlineGreedy(2, 2));
+		algoList.add(new TwoStageOnlineGreedy(times, f, s));
 		
 		OutputFormatter formatter = new TableOutputFormatter("data\\out\\tables\\two-stage"
-				, "two-stage-onlineGreedy");
+				, "two-stage-greedy-" + times + "-times");
 		
 		Runner runner = new Runner(formatter);
 		runner.setParam(t, v, k1, k2);

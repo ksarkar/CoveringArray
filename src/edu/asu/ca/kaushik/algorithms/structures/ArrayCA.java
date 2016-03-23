@@ -222,7 +222,7 @@ public class ArrayCA implements CA {
 	 * @return true if it is a covering array, false otherwise
 	 */
 	public boolean isCompleteCA(ColGroup cols) {
-		ColGrIterator clGrIt = new ColGrIterator(this.t, this.k);
+		ColGrIterator clGrIt = new ColGrIterator2(this.t, this.k);
 		int colGrNum = 0;
 		
 		clGrIt.rewind();

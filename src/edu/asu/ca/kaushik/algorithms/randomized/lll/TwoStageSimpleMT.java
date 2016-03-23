@@ -27,6 +27,7 @@ import edu.asu.ca.kaushik.algorithms.randomized.RepeatedRand;
 import edu.asu.ca.kaushik.algorithms.randomized.UniformRandom;
 import edu.asu.ca.kaushik.algorithms.structures.CA;
 import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator;
+import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator2;
 import edu.asu.ca.kaushik.algorithms.structures.ColGroup;
 import edu.asu.ca.kaushik.algorithms.structures.Helper;
 import edu.asu.ca.kaushik.algorithms.structures.Interaction;
@@ -64,7 +65,7 @@ public class TwoStageSimpleMT extends LLL {
 		this.N = this.twoStageSimpleBound(t,k,v);
 		int numMinUncovInt = (int)Math.ceil(Helper.expectNumUncovInt(t, k, v, this.N));
 		LLLCA partialCa = new LLLCA(t, k, v, this.N);
-		ColGrIterator clGrIt = new ColGrIterator(t, k);
+		ColGrIterator clGrIt = new ColGrIterator2(t, k);
 		List<Interaction> uncovInts;
 		int uncovIntNum;
 		int colGrNum;

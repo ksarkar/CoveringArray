@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Random;
 
 import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator;
+import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator1;
 import edu.asu.ca.kaushik.algorithms.structures.ColGroup;
 import edu.asu.ca.kaushik.algorithms.structures.Interaction;
 import edu.asu.ca.kaushik.algorithms.structures.LLLCA;
@@ -39,7 +40,7 @@ public class PartialArrayGen {
 		
 		List<Interaction> uncovInts = new ArrayList<Interaction>();
 		int uncovIntNum = 0;
-		ColGrIterator clGrIt = new ColGrIterator(t, k);
+		ColGrIterator clGrIt = new ColGrIterator1(t, k);
 		clGrIt.rewind();
 		while(clGrIt.hasNext()){
 			ColGroup cols = clGrIt.next();

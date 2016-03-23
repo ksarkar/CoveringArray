@@ -14,7 +14,6 @@
 
 package edu.asu.ca.kaushik.algorithms.derandomized.condexpintervariations.triebased;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -22,6 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator;
+import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator2;
 import edu.asu.ca.kaushik.algorithms.structures.ColGroup;
 import edu.asu.ca.kaushik.algorithms.structures.Helper;
 import edu.asu.ca.kaushik.algorithms.structures.Interaction;
@@ -93,8 +94,8 @@ public class TrieIG implements InteractionSet{
 
 
 	@Override
-	public List<ColGroup> getAllColGroups() {
-		return new ArrayList<ColGroup>(this.graph.keySet());
+	public ColGrIterator getColGrIterator() {
+		return new ColGrIterator2(this.t, this.k);
 	}
 
 

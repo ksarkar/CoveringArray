@@ -6,3 +6,4 @@ k, TwoStageColoring-3-times
 40, 58570
 41, 59209
 k, TwoStageSimple
+41, 66725

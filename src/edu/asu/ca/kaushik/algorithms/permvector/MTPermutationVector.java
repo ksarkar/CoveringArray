@@ -16,8 +16,6 @@ package edu.asu.ca.kaushik.algorithms.permvector;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.math3.util.CombinatoricsUtils;
@@ -27,10 +25,9 @@ import edu.asu.ca.kaushik.algorithms.permvector.utils.CPHF;
 import edu.asu.ca.kaushik.algorithms.structures.ArrayCA;
 import edu.asu.ca.kaushik.algorithms.structures.CA;
 import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator;
-import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator1;
+import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator2;
 import edu.asu.ca.kaushik.algorithms.structures.ColGroup;
 import edu.asu.ca.kaushik.algorithms.structures.PartialCA;
-import edu.asu.ca.kaushik.algorithms.twostage.TwoStageDensity;
 import edu.asu.ca.kaushik.outputformatter.OutputFormatter;
 import edu.asu.ca.kaushik.outputformatter.TableOutputFormatter;
 import edu.asu.ca.kaushik.scripts.Runner;
@@ -50,7 +47,7 @@ public class MTPermutationVector implements CAGenAlgo {
 		System.out.println("CPHF size: " + n);
 		
 		CPHF c = new CPHF(n,k,v,t);
-		ColGrIterator1 clGrIt = new ColGrIterator1(t, k);
+		ColGrIterator clGrIt = new ColGrIterator2(t, k);
 		boolean isCPHF;
 		int colGrNum;
 		int iteration = 1;

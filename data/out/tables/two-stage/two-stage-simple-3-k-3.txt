@@ -188,3 +188,15 @@ k, TwoStageColoring-2-times
 k, TwoStageOnlineGreedy-3-times
 20, 167
 21, 171
+k, TwoStageSimple-0-slack
+20, 212
+21, 236
+k, TwoStageSimple-1-slack
+20, 212
+21, 217
+k, TwoStageSimple-1-slack
+20, 211
+21, 238
+k, TwoStageSimple-5-slack
+20, 207
+21, 216

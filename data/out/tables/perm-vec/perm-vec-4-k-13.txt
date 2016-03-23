@@ -1,0 +1,9 @@
+k, MTPermutationVector
+100, 171301
+k, MTPermutationVector
+200, 199849
+k, MTPermutationVector
+k, MTPermutationVector
+k, MTPermutationVector
+k, MTPermutationVector
+255, 199849

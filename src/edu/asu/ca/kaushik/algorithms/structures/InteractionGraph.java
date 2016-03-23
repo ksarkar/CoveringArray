@@ -23,6 +23,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
+
+import org.apache.commons.math3.util.CombinatoricsUtils;
+
 import edu.asu.ca.kaushik.algorithms.structures.Helper;
 
 
@@ -40,7 +43,7 @@ public class InteractionGraph implements InteractionSet {
 	// probability of choosing symbol i in column j
 	private double[][] prob;
 	
-	private List<ColGroup> allColGroups;
+	private ColGrIterator colIt;
 	
 	private Random rand;
 	
@@ -63,8 +66,7 @@ public class InteractionGraph implements InteractionSet {
 		// copied. The same sets are shared between the original and the copied 
 		// hashmap. (Be careful when modifying the set of symTuples).
 		this.graph = new HashMap<ColGroup, Set<SymTuple>>(ig.graph);
-		// no need to make a separate copy of allColGroups, since it will used read-only
-		this.allColGroups = ig.allColGroups;
+		this.colIt = ig.colIt;
 	}
 
 	public InteractionGraph(int t, int k, int v){
@@ -78,6 +80,35 @@ public class InteractionGraph implements InteractionSet {
 		
 		this.graph = createFullGraph(t, k, v);
 		this.rand = new Random(1234L);
+	}	
+
+	private Map<ColGroup, Set<SymTuple>> createFullGraph(int t, int k, int v) {
+		this.colIt = new ColGrIterator2(t, k);
+		List<SymTuple> symTuples = Helper.createAllSymTuples(t, v);
+		
+		this.numInt = (long)CombinatoricsUtils.binomialCoefficientDouble(k, t)
+				* symTuples.size();
+		this.numUncovInt = this.numInt;
+		int uncovIntCol = (int)(this.numInt * this.t / this.k);
+		int uncovIntColSym = uncovIntCol / this.v;
+		for (int j = 0; j < this.k; j++){
+			this.uncovDist[j] = uncovIntCol;
+			
+			for (int i = 0; i < v; i++) {
+				this.uncovDSym[i][j] = uncovIntColSym; 
+				this.prob[i][j] = 1.0d / this.v;
+			}
+		}
+		
+		Map<ColGroup, Set<SymTuple>> graph = new HashMap<ColGroup, Set<SymTuple>>();
+		
+		this.colIt.rewind();
+		while (this.colIt.hasNext()) {
+			ColGroup cols = this.colIt.next();
+			graph.put(cols, new HashSet<SymTuple>(symTuples));
+		}
+		
+		return graph;
 	}
 	
 	public InteractionGraph(int t, int k, int v, List<Interaction> uncovInts) {
@@ -87,8 +118,7 @@ public class InteractionGraph implements InteractionSet {
 		
 		this.rand = new Random(1234L);
 		this.numUncovInt = this.numInt = uncovInts.size();
-		//TODO replace it by iterator method
-		this.allColGroups = Helper.createAllColGroups(t, k);
+		this.colIt = new ColGrIterator2(t, k);
 		
 		this.graph = new HashMap<ColGroup, Set<SymTuple>>();
 		Iterator<Interaction> it = uncovInts.iterator();
@@ -110,8 +140,8 @@ public class InteractionGraph implements InteractionSet {
 	}
 
 	@Override
-	public List<ColGroup> getAllColGroups(){
-		return this.allColGroups;
+	public ColGrIterator getColGrIterator(){
+		return this.colIt;
 	}
 	
 	@Override
@@ -121,33 +151,6 @@ public class InteractionGraph implements InteractionSet {
 	
 	public long getNumInt() {
 		return this.numInt;
-	}
-	
-
-	private Map<ColGroup, Set<SymTuple>> createFullGraph(int t, int k, int v) {
-		this.allColGroups = Helper.createAllColGroups(t, k);
-		List<SymTuple> symTuples = Helper.createAllSymTuples(t, v);
-		
-		this.numInt = this.allColGroups.size() * symTuples.size();
-		this.numUncovInt = this.numInt;
-		int uncovIntCol = (int)(this.numInt * this.t / this.k);
-		int uncovIntColSym = uncovIntCol / this.v;
-		for (int j = 0; j < this.k; j++){
-			this.uncovDist[j] = uncovIntCol;
-			
-			for (int i = 0; i < v; i++) {
-				this.uncovDSym[i][j] = uncovIntColSym; 
-				this.prob[i][j] = 1.0d / this.v;
-			}
-		}
-		
-		Map<ColGroup, Set<SymTuple>> graph = new HashMap<ColGroup, Set<SymTuple>>();
-		
-		for (ColGroup cols : this.allColGroups) {
-			graph.put(cols, new HashSet<SymTuple>(symTuples));
-		}
-		
-		return graph;
 	}
 	
 	public void setRand(Random rand) {

@@ -22,10 +22,8 @@ import org.apache.commons.math3.util.CombinatoricsUtils;
 
 import edu.asu.ca.kaushik.algorithms.CAGenAlgo;
 import edu.asu.ca.kaushik.algorithms.derandomized.CondExpEntries;
-import edu.asu.ca.kaushik.algorithms.structures.ColGroup;
 import edu.asu.ca.kaushik.algorithms.structures.Interaction;
 import edu.asu.ca.kaushik.algorithms.structures.InteractionGraph;
-import edu.asu.ca.kaushik.algorithms.structures.LLLCA;
 import edu.asu.ca.kaushik.algorithms.structures.ListCAExt;
 import edu.asu.ca.kaushik.outputformatter.OutputFormatter;
 import edu.asu.ca.kaushik.outputformatter.TableOutputFormatter;
@@ -39,6 +37,7 @@ import edu.asu.ca.kaushik.scripts.Runner;
 public class TwoStageDensity extends TwoStage {
 	private int times;
 	private List<Interaction> uncovInts; // to keep track of all the uncovered interactions
+	private int slack;
 	
 	/**
 	 * 
@@ -46,15 +45,16 @@ public class TwoStageDensity extends TwoStage {
 	 * @param firstStage What randomized algorithm to use in stage 1. Valid values: 0 -- uniform random, 
 	 * 1 -- re-sample only the last offending interaction, 2 -- re-sample all the offending interactions
 	 */
-	public TwoStageDensity(int times, int firstStage) {
-		super(firstStage);
+	public TwoStageDensity(int times, int firstStage, int sp) {
+		super(firstStage, sp);
 		this.times = times;
+		this.slack = sp;
 		this.uncovInts = new ArrayList<Interaction>();
 	}
 
 	@Override
 	public String getName() {
-		return new String("TwoStageDensity-" + this.times + "-times");
+		return new String("TwoStageDensity-" + this.times + "-times-" + this.slack + "-slack");
 	}
 
 	@Override
@@ -89,24 +89,27 @@ public class TwoStageDensity extends TwoStage {
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException {
-		int t = 0,k1 = 0,k2 = 0,v = 0;
+		int t = 0, k1 = 0, k2 = 0, v = 0, times = 0, f = 0, s = 0;
 		
-		if (args.length == 4) {
+		if (args.length == 7) {
 			t = Integer.parseInt(args[0]);
 			v = Integer.parseInt(args[1]);
 			k1 = Integer.parseInt(args[2]);
 			k2 = Integer.parseInt(args[3]);
+			times = Integer.parseInt(args[4]);
+			f = Integer.parseInt(args[5]);
+			s = Integer.parseInt(args[6]);
 		} else {
-			System.err.println("Need four arguments- t, v, kStart and kEnd");
+			System.err.println("Need seven arguments- t, v, kStart, kEnd, times, firstStage and slack percent");
 			System.exit(1);
 		}
 		
 		List<CAGenAlgo> algoList = new ArrayList<CAGenAlgo>();
 		
-		algoList.add(new TwoStageDensity(3, 2));
+		algoList.add(new TwoStageDensity(times, f, s));
 		
 		OutputFormatter formatter = new TableOutputFormatter("data\\out\\tables\\two-stage"
-				, "two-stage-density");
+				, "two-stage-density-" + times + "-times");
 		
 		Runner runner = new Runner(formatter);
 		runner.setParam(t, v, k1, k2);

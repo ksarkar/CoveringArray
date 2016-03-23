@@ -13,13 +13,17 @@
  */ 
 
 package edu.asu.ca.kaushik.algorithms.derandomized;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 import edu.asu.ca.kaushik.algorithms.CAGenAlgo;
+import edu.asu.ca.kaushik.algorithms.permvector.MTPermutationVector;
+import edu.asu.ca.kaushik.algorithms.structures.ArrayCA;
 import edu.asu.ca.kaushik.algorithms.structures.CA;
+import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator;
 import edu.asu.ca.kaushik.algorithms.structures.ColGroup;
 import edu.asu.ca.kaushik.algorithms.structures.Helper;
 import edu.asu.ca.kaushik.algorithms.structures.Interaction;
@@ -28,6 +32,9 @@ import edu.asu.ca.kaushik.algorithms.structures.InteractionSet;
 import edu.asu.ca.kaushik.algorithms.structures.ListCA;
 import edu.asu.ca.kaushik.algorithms.structures.PartialCA;
 import edu.asu.ca.kaushik.algorithms.structures.SymTuple;
+import edu.asu.ca.kaushik.outputformatter.OutputFormatter;
+import edu.asu.ca.kaushik.outputformatter.TableOutputFormatter;
+import edu.asu.ca.kaushik.scripts.Runner;
 
 
 public class CondExpEntries implements CAGenAlgo {
@@ -62,6 +69,12 @@ public class CondExpEntries implements CAGenAlgo {
 		ListCA ca = new ListCA(t, k, v);
 		InteractionSet ig = this.createIntersectionSet(t,k,v);
 		this.constructCA(ca,  ig);
+		
+		ArrayCA testCA = new ArrayCA(ca);
+		ColGroup cols = new ColGroup(new int[0]);
+		System.out.println("\nThis " + (testCA.isCompleteCA(cols) ? "is a CA" 
+				: "is not a CA\n"));
+		
 		return ca;	
 	}
 	
@@ -126,11 +139,12 @@ public class CondExpEntries implements CAGenAlgo {
 	}
 
 	protected double computeExpCoverageSymb(Integer[] row, int index, int v, InteractionSet ig) {
-		// TODO replace it by iterator
-		List<ColGroup> allColGroups = ig.getAllColGroups();
+		ColGrIterator colIt = ig.getColGrIterator();
 		double expCoverage = 0;
 		
-		for (ColGroup colGr : allColGroups){
+		colIt.rewind();
+		while (colIt.hasNext()){
+			ColGroup colGr = colIt.next();
 			if (colGr.contains(index)) {
 				expCoverage = expCoverage + this.computeExpectedCoverage(colGr, row, v, ig);
 			}
@@ -233,6 +247,36 @@ public class CondExpEntries implements CAGenAlgo {
 		}
 		
 		return partialCA;
+	}
+	
+	/**
+	 * @param args
+	 * @throws IOException 
+	 */
+	public static void main(String[] args) throws IOException {
+		int t = 0,k1 = 0,k2 = 0,v = 0;
+		
+		if (args.length == 4) {
+			t = Integer.parseInt(args[0]);
+			v = Integer.parseInt(args[1]);
+			k1 = Integer.parseInt(args[2]);
+			k2 = Integer.parseInt(args[3]);
+		} else {
+			System.err.println("Need four arguments- t, v, kStart and kEnd");
+			System.exit(1);
+		}
+		
+		List<CAGenAlgo> algoList = new ArrayList<CAGenAlgo>();
+		
+		algoList.add(new CondExpEntries());
+		
+		OutputFormatter formatter = new TableOutputFormatter("data\\out\\tables\\density"
+				, "simple-cond-exp");
+		
+		Runner runner = new Runner(formatter);
+		runner.setParam(t, v, k1, k2);
+		runner.setAlgos(algoList);
+		runner.run();
 	}
 
 }
