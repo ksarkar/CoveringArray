@@ -16,14 +16,13 @@ package edu.asu.ca.kaushik.algorithms.derandomized;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
 import edu.asu.ca.kaushik.algorithms.CAGenAlgo;
-import edu.asu.ca.kaushik.algorithms.permvector.MTPermutationVector;
 import edu.asu.ca.kaushik.algorithms.structures.ArrayCA;
 import edu.asu.ca.kaushik.algorithms.structures.CA;
-import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator;
 import edu.asu.ca.kaushik.algorithms.structures.ColGroup;
 import edu.asu.ca.kaushik.algorithms.structures.Helper;
 import edu.asu.ca.kaushik.algorithms.structures.Interaction;
@@ -139,10 +138,9 @@ public class CondExpEntries implements CAGenAlgo {
 	}
 
 	protected double computeExpCoverageSymb(Integer[] row, int index, int v, InteractionSet ig) {
-		ColGrIterator colIt = ig.getColGrIterator();
+		Iterator<ColGroup> colIt = ig.getColGrIterator();
 		double expCoverage = 0;
 		
-		colIt.rewind();
 		while (colIt.hasNext()){
 			ColGroup colGr = colIt.next();
 			if (colGr.contains(index)) {

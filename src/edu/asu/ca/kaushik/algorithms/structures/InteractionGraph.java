@@ -43,8 +43,6 @@ public class InteractionGraph implements InteractionSet {
 	// probability of choosing symbol i in column j
 	private double[][] prob;
 	
-	private ColGrIterator colIt;
-	
 	private Random rand;
 	
 	// time complexity measurement
@@ -66,7 +64,6 @@ public class InteractionGraph implements InteractionSet {
 		// copied. The same sets are shared between the original and the copied 
 		// hashmap. (Be careful when modifying the set of symTuples).
 		this.graph = new HashMap<ColGroup, Set<SymTuple>>(ig.graph);
-		this.colIt = ig.colIt;
 	}
 
 	public InteractionGraph(int t, int k, int v){
@@ -83,7 +80,7 @@ public class InteractionGraph implements InteractionSet {
 	}	
 
 	private Map<ColGroup, Set<SymTuple>> createFullGraph(int t, int k, int v) {
-		this.colIt = new ColGrIterator2(t, k);
+		ColGrIterator colIt = new ColGrLexIterator(t, k);
 		List<SymTuple> symTuples = Helper.createAllSymTuples(t, v);
 		
 		this.numInt = (long)CombinatoricsUtils.binomialCoefficientDouble(k, t)
@@ -102,9 +99,9 @@ public class InteractionGraph implements InteractionSet {
 		
 		Map<ColGroup, Set<SymTuple>> graph = new HashMap<ColGroup, Set<SymTuple>>();
 		
-		this.colIt.rewind();
-		while (this.colIt.hasNext()) {
-			ColGroup cols = this.colIt.next();
+		colIt.rewind();
+		while (colIt.hasNext()) {
+			ColGroup cols = colIt.next();
 			graph.put(cols, new HashSet<SymTuple>(symTuples));
 		}
 		
@@ -118,7 +115,6 @@ public class InteractionGraph implements InteractionSet {
 		
 		this.rand = new Random(1234L);
 		this.numUncovInt = this.numInt = uncovInts.size();
-		this.colIt = new ColGrIterator2(t, k);
 		
 		this.graph = new HashMap<ColGroup, Set<SymTuple>>();
 		Iterator<Interaction> it = uncovInts.iterator();
@@ -138,10 +134,10 @@ public class InteractionGraph implements InteractionSet {
 		this.uncovDSym = new int[this.v][this.k];
 		this.prob = new double[this.v][this.k];
 	}
-
+	
 	@Override
-	public ColGrIterator getColGrIterator(){
-		return this.colIt;
+	public Iterator<ColGroup> getColGrIterator(){
+		return this.graph.keySet().iterator();
 	}
 	
 	@Override
@@ -615,6 +611,13 @@ public class InteractionGraph implements InteractionSet {
 		sampledIg.numUncovInt = sampledIg.numUncovInt - coverageSIG;
 		
 		return coverage;
+	}
+	
+	@Override
+	public List<Interaction> getInteractions() {
+		// this method should not be called
+		assert false;
+		return null;
 	}
 
 	public static void main(String[] args){

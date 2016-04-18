@@ -15,21 +15,15 @@
 package edu.asu.ca.kaushik.algorithms.structures;
 
 import java.util.Iterator;
-import java.util.List;
 
-public interface InteractionSet {
-
-	public boolean isEmpty();
-	public int deleteInteractions(Integer[] newRandRow, int[] covD);
-	public boolean contains(Interaction interaction);
-	public Interaction selectInteraction(Integer[] newRow);
-	public int getComp();
-	public void deleteFullyDeterminedInteractions(Integer[] newRow);
-	public void deletIncompatibleInteractions(Interaction interaction);
-	public int getCoverage(Integer[] newRow, int[] covD);
-	public int getNumUncovInt(ColGroup colGr);
-	public double computeProbCoverage(int[] sCols, int[] entries);
+public interface OrbRepSet {
 	public int getT();
+	public int getK();
+	public int getV();
+	public boolean isEmpty();
+	public int deleteOrbits(Integer[] newRandRow);
+	public Group getGroup();
 	public Iterator<ColGroup> getColGrIterator();
-	public List<Interaction> getInteractions();
+	public boolean containsOrbit(Interaction interaction);
+
 }

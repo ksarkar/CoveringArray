@@ -48,6 +48,12 @@ public class ListCA implements PartialCA {
 		return true;
 	}
 	
+	public void addRows(List<Integer[]> rows) {
+		for (Integer[] row : rows) {
+			this.addRow(row);
+		}
+	}
+	
 	@Override
 	public int getT() {
 		return t;

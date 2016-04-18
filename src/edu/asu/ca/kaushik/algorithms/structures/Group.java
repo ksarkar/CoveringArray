@@ -14,22 +14,14 @@
 
 package edu.asu.ca.kaushik.algorithms.structures;
 
-import java.util.Iterator;
 import java.util.List;
 
-public interface InteractionSet {
+public interface Group {
 
-	public boolean isEmpty();
-	public int deleteInteractions(Integer[] newRandRow, int[] covD);
-	public boolean contains(Interaction interaction);
-	public Interaction selectInteraction(Integer[] newRow);
-	public int getComp();
-	public void deleteFullyDeterminedInteractions(Integer[] newRow);
-	public void deletIncompatibleInteractions(Interaction interaction);
-	public int getCoverage(Integer[] newRow, int[] covD);
-	public int getNumUncovInt(ColGroup colGr);
-	public double computeProbCoverage(int[] sCols, int[] entries);
-	public int getT();
-	public Iterator<ColGroup> getColGrIterator();
-	public List<Interaction> getInteractions();
+	public ListCA develop(ListCA sCA);
+	public List<SymTuple> getOrbits(ColGroup colGr, Integer[] row);
+	public List<SymTuple> getAllOrbits(int t);
+	public boolean isInSameOrbit(SymTuple tup, SymTuple tuple);
+	public SymTuple getOrbit(SymTuple symTup);
+
 }

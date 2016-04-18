@@ -12,7 +12,7 @@
  * You should have received a copy of the GNU General Public License along with CoveringArray.  If not, see <http://www.gnu.org/licenses/>.
  */ 
 
-package edu.asu.ca.kaushik.algorithms.permvector.utils;
+package edu.asu.ca.kaushik.algorithms.structures;
 
 import java.util.Arrays;
 
@@ -49,45 +49,49 @@ public class FiniteField {
 	
 	/**
 	 * Finite field addition
-	 * @param i
-	 * @param j
+	 * @param i, 0<=i<=v-1
+	 * @param j, 0<=j<=v-1
 	 * @return (u + v) mod v
 	 */
 	public int add(int i, int j) {
-		assert((i < this.v) && (j < this.v));
+		assert((i < this.v) && (i >= 0) && (j < this.v) && (j >= 0));
+		//assert((i < this.v) && (j < this.v));
 		return (i + j) % this.v;		
 	}
 	
 	/**
 	 * Finite field subtraction
-	 * @param i
-	 * @param j
+	 * @param i, 0<=i<=v-1
+	 * @param j, 0<=j<=v-1
 	 * @return (i - j) mod v
 	 */
 	public int subtract(int i, int j) {
+		assert((i < this.v) && (i >= 0) && (j < this.v) && (j >= 0));
 		assert((i < this.v) && (j < this.v));
 		return (i + this.v - j) % this.v;
 	}
 	
 	/**
 	 * Finite field multiplication
-	 * @param i
-	 * @param j
+	 * @param i, 0<=i<=v-1
+	 * @param j, 0<=j<=v-1
 	 * @return (i * j) mod v
 	 */
 	public int multiply(int i, int j) {
-		assert((i < this.v) && (j < this.v));
+		assert((i < this.v) && (i >= 0) && (j < this.v) && (j >= 0));
+		//assert((i < this.v) && (j < this.v));
 		return this.mTab[i][j];
 	}
 	
 	/**
 	 * Finite field division
-	 * @param i
-	 * @param j
+	 * @param i, 0<=i<=v-1
+	 * @param j, 0<=j<=v-1
 	 * @return (i / j) mod v
 	 */
 	public int divide(int i, int j) {
-		assert((i < this.v) && (j < this.v) && (j != 0));
+		assert((i < this.v) && (i >= 0) && (j < this.v) && (j >= 0));
+		//assert((i < this.v) && (j < this.v));
 		return this.mTab[i][this.inv[j]];
 	}
  
@@ -175,6 +179,9 @@ public class FiniteField {
 		FiniteField f = new FiniteField(5);
 		System.out.println(printMatrix(f.mTab));
 		System.out.println(Arrays.toString(f.inv));
+		System.out.println(f.add(2, 1));
+		//System.out.println(f.subtract(-3, 1));
+		//System.out.println(f.subtract(-2, 3));
 		System.out.println(f.divide(4, 3));
 		
 		int[][] a = {{1, 2, 3}, {2, 4, 2}, {3, 2, 4}};

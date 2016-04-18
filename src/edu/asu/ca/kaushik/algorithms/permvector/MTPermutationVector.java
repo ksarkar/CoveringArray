@@ -80,10 +80,10 @@ public class MTPermutationVector implements CAGenAlgo {
 			System.out.println(Arrays.toString(caIt.next()));
 		}*/
 		
-		/*ArrayCA aca = (ArrayCA)ca;
+		ArrayCA aca = (ArrayCA)ca;
 		ColGroup cols = new ColGroup(new int[0]);
 		System.out.println("\nThis " + (aca.isCompleteCA(cols) ? "is a CA" 
-				: "is not a CA\n"));*/
+				: "is not a CA\n"));
 		
 		return ca;
 	}

@@ -7,3 +7,8 @@ k, TwoStageColoring-3-times
 41, 59209
 k, TwoStageSimple
 41, 66725
+k, TwoStageSimple-0-slack
+41, 66816
+42, 71537
+43, 76202
+44, 68629

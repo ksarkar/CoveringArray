@@ -1,0 +1,2 @@
+k, TwoStageGreedy-3-times-0-slack
+57, 12044

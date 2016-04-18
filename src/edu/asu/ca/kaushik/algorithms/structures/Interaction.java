@@ -76,6 +76,36 @@ public class Interaction {
 		return true;
 	}
 	
+	/**
+	 * Checks if this interaction is compatible with the given row
+	 * @param row
+	 * @param v the wild card (star) symbol
+	 * @return -1 if incompatible, otherwise number of free columns
+	 */
+	public int isCompatible(Integer[] row, int v) {
+		int numStar = 0;
+		int[] cols = this.cols.getCols();
+		int[] syms = this.syms.getSyms();
+		int t = cols.length;
+		for (int i = 0; i < t; i++) {
+			if (row[cols[i]] == v) {
+				numStar++;
+			} else {
+				if (syms[i] != row[cols[i]]) {
+					return -1;
+				}
+			}
+		}
+		return numStar;
+	}
 	
+	public static void main(String args[]) {
+		int[] c = {0,2,3};
+		int[] s = {0,0,1};
+		Interaction in = new Interaction(new ColGroup(c), new SymTuple(s));
+		Integer[] row = {0, 0, 2, 1};
+		int v = 2;
+		System.out.println(in.isCompatible(row, v));
+	}
 
 }

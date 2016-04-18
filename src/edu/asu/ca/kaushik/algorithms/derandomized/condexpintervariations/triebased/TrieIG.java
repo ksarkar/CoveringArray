@@ -93,12 +93,15 @@ public class TrieIG implements InteractionSet{
 
 
 
-	@Override
+	/*@Override
 	public ColGrIterator getColGrIterator() {
 		return new ColGrIterator2(this.t, this.k);
+	}*/
+
+	@Override
+	public Iterator<ColGroup> getColGrIterator(){
+		return this.graph.keySet().iterator();
 	}
-
-
 
 	@Override
 	public boolean contains(Interaction interaction) {
@@ -300,6 +303,13 @@ public class TrieIG implements InteractionSet{
 		return igC;
 	}
 	
+	@Override
+	public List<Interaction> getInteractions() {
+		// this method should not be called
+		assert false;
+		return null;
+	}
+	
 
 	/**
 	 * @param args
@@ -314,7 +324,6 @@ public class TrieIG implements InteractionSet{
 		
 		System.out.println(ig.selectInteraction(new Integer[]{2,2,2}));
 		
-	}
-	
+	}	
 
 }

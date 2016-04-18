@@ -130,7 +130,7 @@ public class ArrayCA implements CA {
 
 			@Override
 			public void remove() {
-				// TODO Auto-generated method stub
+				assert false;
 				
 			}
 			
@@ -139,7 +139,7 @@ public class ArrayCA implements CA {
 
 	@Override
 	public Instrumentation getInstrumentation() {
-		// TODO Auto-generated method stub
+		assert false;
 		return null;
 	}
 	

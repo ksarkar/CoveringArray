@@ -19,6 +19,7 @@ import java.util.Random;
 import edu.asu.ca.kaushik.algorithms.structures.ArrayCA;
 import edu.asu.ca.kaushik.algorithms.structures.CA;
 import edu.asu.ca.kaushik.algorithms.structures.ColGroup;
+import edu.asu.ca.kaushik.algorithms.structures.FiniteField;
 
 public class CPHF {
 	private Random rand;

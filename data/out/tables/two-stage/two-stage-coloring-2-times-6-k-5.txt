@@ -1,0 +1,5 @@
+k, TwoStageColoring-2-times-0-slack
+35, 215521
+k, TwoStageColoring-2-times-0-slack
+36, 218314
+k, TwoStageColoring-2-times-0-slack

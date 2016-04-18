@@ -22,8 +22,10 @@ import org.apache.commons.math3.util.CombinatoricsUtils;
 
 import edu.asu.ca.kaushik.algorithms.CAGenAlgo;
 import edu.asu.ca.kaushik.algorithms.derandomized.CondExpEntries;
+import edu.asu.ca.kaushik.algorithms.derandomized.DensityForSmall;
 import edu.asu.ca.kaushik.algorithms.structures.Interaction;
 import edu.asu.ca.kaushik.algorithms.structures.InteractionGraph;
+import edu.asu.ca.kaushik.algorithms.structures.InteractionSetForSmall;
 import edu.asu.ca.kaushik.algorithms.structures.ListCAExt;
 import edu.asu.ca.kaushik.outputformatter.OutputFormatter;
 import edu.asu.ca.kaushik.outputformatter.TableOutputFormatter;
@@ -69,8 +71,10 @@ public class TwoStageDensity extends TwoStage {
 
 	@Override
 	protected void secondStage(ListCAExt remCA) {
-		CondExpEntries densityAlgo = new CondExpEntries();
-		InteractionGraph ig = new InteractionGraph(remCA.getT(), remCA.getK(), remCA.getV(), this.uncovInts);
+		//CondExpEntries densityAlgo = new CondExpEntries();
+		CondExpEntries densityAlgo = new DensityForSmall();
+		//InteractionGraph ig = new InteractionGraph(remCA.getT(), remCA.getK(), remCA.getV(), this.uncovInts);
+		InteractionSetForSmall ig = new InteractionSetForSmall(this.uncovInts, remCA.getV());
 		densityAlgo.constructCA(remCA, ig);
 	}
 	
