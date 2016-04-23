@@ -1,0 +1,14 @@
+k, GTS-Trivial-slack-0-coloring-3-times
+20, 166
+k, GTS-Cyclic-slack-0-coloring-3-times
+20, 162
+k, GTS-Frobenius-slack-0-coloring-3-times
+20, 159
+k, GTS-Trivial-slack-0-coloring-100-times
+60, 156
+k, GTS-Trivial-slack-0-coloring-100-times
+60, 186
+k, GTS-Trivial-slack-0-coloring-1000-times
+60, 171
+k, GTS-Frobenius-slack-0-coloring-1000-times
+60, 177

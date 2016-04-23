@@ -23,5 +23,8 @@ public interface Group {
 	public List<SymTuple> getAllOrbits(int t);
 	public boolean isInSameOrbit(SymTuple tup, SymTuple tuple);
 	public SymTuple getOrbit(SymTuple symTup);
+	public GroupElement convert(SymTuple symTuple, SymTuple symTuple2);
+	public Interaction act(GroupElement ge, Interaction inter);
+	public GroupElement identity();
 
 }

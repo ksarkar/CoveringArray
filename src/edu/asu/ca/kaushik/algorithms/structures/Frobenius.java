@@ -212,23 +212,93 @@ public class Frobenius implements Group {
 	public SymTuple getOrbit(SymTuple symTup) {
 		int[] s1 = symTup.getSyms();
 		int t = s1.length;
+		int[] s2 = new int[t];
 		int b = s1[0];
 		for (int i = 0; i < t; i++) {
-			s1[i] = this.f.subtract(s1[i], b);
+			s2[i] = this.f.subtract(s1[i], b);
 		}
-		int a = 0;
+		int a = 1;
 		for (int i = 1; i < t; i++) {
-			if (s1[i] != 0) {
-				a = s1[i];
+			if (s2[i] != 0) {
+				a = s2[i];
 				break;
 			}
 		}
-		if (a != 0) {
-			for (int i = 0; i < t; i++) {
-				s1[i] = this.f.divide(s1[i], a);
+		
+		for (int i = 0; i < t; i++) {
+			s2[i] = this.f.divide(s2[i], a);
+		}
+		
+		return new SymTuple(s2);
+	}
+	
+	private FrobeniusElement getMap(SymTuple symTuple) {
+		int[] s1 = symTuple.getSyms();
+		int t = s1.length;
+		int[] s2 = new int[t];
+		int b = s1[0];
+		
+		for (int i = 0; i < t; i++) {
+			s2[i] = this.f.subtract(s1[i], b);
+		}
+		int a = 1;
+		for (int i = 1; i < t; i++) {
+			if (s2[i] != 0) {
+				a = s2[i];
+				break;
 			}
 		}
-		return new SymTuple(s1);
+		
+		return new FrobeniusElement(a,b);
+	}
+	
+	@Override
+	public GroupElement convert(SymTuple symTuple1, SymTuple symTuple2) {
+		if (!this.isInSameOrbit(symTuple1, symTuple2)){
+			return null;
+		} else {
+			FrobeniusElement e1 = this.getMap(symTuple1);
+			FrobeniusElement e2 = this.getMap(symTuple2);
+			
+			int a1 = e1.getA();
+			int b1 = e1.getB();
+			
+			int a2 = e2.getA();
+			int b2 = e2.getB();
+			
+			int a = this.f.divide(a2, a1);
+			int b = this.f.subtract(b2, this.f.multiply(a, b1));
+			
+			return new FrobeniusElement(a, b);
+		}
+	}
+
+	@Override
+	public Interaction act(GroupElement ge, Interaction inter) {
+		FrobeniusElement e = null;
+		if (ge instanceof FrobeniusElement) {
+			e = (FrobeniusElement)ge;
+		} else {
+			System.err.println("Wrong type of group element: act()");
+			System.exit(1);
+		}
+		
+		int a = e.getA();
+		assert((a != 0) && (a < this.v) && (a >= 0));
+		int b = e.getB();
+		
+		return this.act(a, b, inter);
+	}
+
+	private Interaction act(int a, int b, Interaction inter) {
+		ColGroup cols = inter.getCols();
+		SymTuple syms = inter.getSyms();
+		return new Interaction(cols, this.act(a, b, syms));
+	}
+	
+	@Override
+	public GroupElement identity() {
+		return new FrobeniusElement(1,0);
 	}
 
 	public static void main(String[] args) {

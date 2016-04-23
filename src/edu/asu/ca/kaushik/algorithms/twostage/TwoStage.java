@@ -24,7 +24,6 @@ import edu.asu.ca.kaushik.algorithms.CAGenAlgo;
 import edu.asu.ca.kaushik.algorithms.structures.ArrayCA;
 import edu.asu.ca.kaushik.algorithms.structures.CA;
 import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator;
-import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator2;
 import edu.asu.ca.kaushik.algorithms.structures.ColGrLexIterator;
 import edu.asu.ca.kaushik.algorithms.structures.ColGroup;
 import edu.asu.ca.kaushik.algorithms.structures.Helper;
@@ -70,7 +69,7 @@ public abstract class TwoStage implements CAGenAlgo {
 		int n = this.partialArraySize(t,k,v);
 		int numMinUncovInt = (int)Math.floor(Helper.expectNumUncovInt(t, k, v, n));
 		numMinUncovInt = (int) (1.0 + this.slackPercent/100) * numMinUncovInt;
-		long seed = 123456L;
+		//long seed = 123456L;
 		LLLCA partialCa = new LLLCA(t, k, v, n, new Random());
 		ColGrIterator clGrIt = new ColGrLexIterator(t, k);
 		int uncovIntNum;
@@ -129,11 +128,11 @@ public abstract class TwoStage implements CAGenAlgo {
 		System.out.println("Number of rows added in second phase: " + remCA.getNumRows());
 		
 		
-		/*ArrayCA testCA = new ArrayCA(fullCA);
+		ArrayCA testCA = new ArrayCA(fullCA);
 		ColGroup cols = new ColGroup(new int[0]);
 		System.out.println("\nThis " + (testCA.isCompleteCA(cols) ? "is a CA" 
 				: "is not a CA\n"));
-		*/
+		
 		
 		return fullCA;
 	}

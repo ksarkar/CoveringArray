@@ -61,6 +61,28 @@ public class OrbRepMap implements OrbRepSet {
 		
 	}
 
+	public OrbRepMap(List<Interaction> orbits, Group g, int t, int k, int v) {
+		this.group = g;
+		
+		this.t = t;
+		this.k = k;
+		this.v = v;
+		
+		this.map = new HashMap<ColGroup, Set<SymTuple>>();
+		Iterator<Interaction> it = orbits.iterator();
+		while (it.hasNext()) {
+			Interaction i = it.next();
+			ColGroup c = i.getCols();
+			SymTuple s = i.getSyms();
+			Set<SymTuple> set = new HashSet<SymTuple>();
+			if (this.map.containsKey(c)) {
+				set = this.map.remove(c);
+			}
+			set.add(s);
+			this.map.put(c, set);
+		}
+	}
+
 	@Override
 	public boolean isEmpty() {
 		return this.map.isEmpty();
@@ -129,6 +151,11 @@ public class OrbRepMap implements OrbRepSet {
 	@Override
 	public Group getGroup() {
 		return this.group;
+	}
+
+	@Override
+	public Set<SymTuple> getOrbits(ColGroup colGr) {
+		return this.map.get(colGr);
 	}
 
 }

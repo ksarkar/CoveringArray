@@ -14,19 +14,6 @@
 
 package edu.asu.ca.kaushik.algorithms.structures;
 
-import java.util.Iterator;
-
-import java.util.Set;
-
-public interface OrbRepSet {
-	public int getT();
-	public int getK();
-	public int getV();
-	public boolean isEmpty();
-	public int deleteOrbits(Integer[] newRandRow);
-	public Group getGroup();
-	public Iterator<ColGroup> getColGrIterator();
-	public boolean containsOrbit(Interaction interaction);
-	public Set<SymTuple> getOrbits(ColGroup colGr);
+public interface GroupElement {
 
 }

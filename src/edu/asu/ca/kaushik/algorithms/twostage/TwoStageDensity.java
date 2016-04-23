@@ -24,7 +24,6 @@ import edu.asu.ca.kaushik.algorithms.CAGenAlgo;
 import edu.asu.ca.kaushik.algorithms.derandomized.CondExpEntries;
 import edu.asu.ca.kaushik.algorithms.derandomized.DensityForSmall;
 import edu.asu.ca.kaushik.algorithms.structures.Interaction;
-import edu.asu.ca.kaushik.algorithms.structures.InteractionGraph;
 import edu.asu.ca.kaushik.algorithms.structures.InteractionSetForSmall;
 import edu.asu.ca.kaushik.algorithms.structures.ListCAExt;
 import edu.asu.ca.kaushik.outputformatter.OutputFormatter;

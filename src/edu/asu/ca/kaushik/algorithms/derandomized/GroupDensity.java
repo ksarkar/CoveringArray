@@ -64,7 +64,10 @@ public class GroupDensity implements CAGenAlgo {
 	@Override
 	public CA generateCA(int t, int k, int v) {		
 		OrbRepSet oSet = new OrbRepMap(t,k,v,this.groupType);
-		ListCA ca = this.constructCA(oSet);
+		ListCA oCA = this.constructOrbitCA(oSet);
+		
+		Group g = oSet.getGroup();
+		ListCA ca = g.develop(oCA);	
 		
 		ArrayCA testCA = new ArrayCA(ca);
 		ColGroup cols = new ColGroup(new int[0]);
@@ -74,17 +77,16 @@ public class GroupDensity implements CAGenAlgo {
 		return ca;	
 	}
 
-	private ListCA constructCA(OrbRepSet oSet) {
-		ListCA sCA = new ListCA(oSet.getT(), oSet.getK(), oSet.getV());
+	public ListCA constructOrbitCA(OrbRepSet oSet) {
+		ListCA oCA = new ListCA(oSet.getT(), oSet.getK(), oSet.getV());
 		while(!oSet.isEmpty()) {		
 			Integer[] newRandRow = selectNextRow(oSet);
 			int coverage = oSet.deleteOrbits(newRandRow);
-			sCA.addRow(newRandRow);	
-			sCA.addCoverage(coverage);
+			oCA.addRow(newRandRow);	
+			oCA.addCoverage(coverage);
 		}
 		
-		Group g = oSet.getGroup();
-		return g.develop(sCA);		
+		return oCA;	
 	}
 
 	private Integer[] selectNextRow(OrbRepSet oSet) {
@@ -118,7 +120,7 @@ public class GroupDensity implements CAGenAlgo {
 		return new Integer(optSymb);
 	}
 	
-	private double computeExpCoverageSymb(Integer[] row, int index, OrbRepSet oSet) {
+	protected double computeExpCoverageSymb(Integer[] row, int index, OrbRepSet oSet) {
 		Iterator<ColGroup> colIt = oSet.getColGrIterator();
 		double expCoverage = 0;
 		
@@ -203,7 +205,7 @@ public class GroupDensity implements CAGenAlgo {
 		
 		List<CAGenAlgo> algoList = new ArrayList<CAGenAlgo>();
 		
-		algoList.add(new GroupDensity(0));
+		algoList.add(new GroupDensity(2));
 		
 		OutputFormatter formatter = new TableOutputFormatter("data\\out\\tables\\groupDensity"
 				, "group-density");

@@ -104,3 +104,8 @@ k, GroupDensity-Cyclic
 k, GroupDensity-Trivial
 k, GroupDensity-Trivial
 40, 119
+k, GroupDensity-Trivial
+40, 121
+k, GroupDensity-Trivial
+k, GroupDensity-Frobenius
+70, 147

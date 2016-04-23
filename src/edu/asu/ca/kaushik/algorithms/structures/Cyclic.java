@@ -112,11 +112,16 @@ public class Cyclic implements Group {
 		for (int i = 0; i < this.v; i++) {
 			Integer[] row = new Integer[k];
 			for (int j = 0; j < k; j++) {
-				row[j] = (r[j] + i) % this.v;
+				row[j] = this.act(i, r[j]);
 			}
 			rows.add(row);
 		}
 		return rows;
+	}
+	
+	private int act(int e, int x) {
+		assert((e < this.v) && (e >= 0));
+		return (x + e) % this.v;
 	}
 	
 	@Override
@@ -129,6 +134,56 @@ public class Cyclic implements Group {
 			s2[i] = (s1[i] + map) % this.v;
 		}
 		return new SymTuple(s2);
+	}
+	
+	@Override
+	public GroupElement convert(SymTuple symTuple1, SymTuple symTuple2) {
+		if (!this.isInSameOrbit(symTuple1, symTuple2)){
+			return null;
+		} else {
+			int[] s1 = symTuple1.getSyms();
+			int[] s2 = symTuple2.getSyms();
+			int map1 = s1[0];
+			int map2 = s2[0];
+			int map = map2 - map1;
+			int el = map >= 0 ? map : this.v + map;
+			return new CyclicElement(el);
+		}
+	}
+
+	@Override
+	public Interaction act(GroupElement ge, Interaction inter) {
+		CyclicElement e = null;
+		if (ge instanceof CyclicElement) {
+			e = (CyclicElement)ge;
+		} else {
+			System.err.println("Wrong type of group element: act()");
+			System.exit(1);
+		}
+		
+		int el = e.getElement();
+		return this.act(el, inter);
+	}
+
+	private Interaction act(int el, Interaction inter) {
+		ColGroup cols = inter.getCols();
+		SymTuple syms = inter.getSyms();
+		return new Interaction(cols, this.act(el, syms));
+	}
+
+	private SymTuple act(int el, SymTuple syms) {
+		int[] s = syms.getSyms();
+		int t = s.length;
+		int[] s1 = new int[t];
+		for (int i = 0; i < t; i++) {
+			s1[i] = this.act(el, s[i]);
+		}
+		return new SymTuple(s1);
+	}
+	
+	@Override
+	public GroupElement identity() {
+		return new CyclicElement(0);
 	}
 
 	public static void main(String[] args) {

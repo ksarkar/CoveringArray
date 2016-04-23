@@ -14,19 +14,29 @@
 
 package edu.asu.ca.kaushik.algorithms.structures;
 
-import java.util.Iterator;
+public class FrobeniusElement implements GroupElement {
+	private int a;
+	private int b;
+	
+	public FrobeniusElement(int a, int b) {
+		assert(a != 0);
+		this.a = a;
+		this.b = b;
+	}
+	
+	public int getA() {
+		return a;
+	}
+	public void setA(int a) {
+		this.a = a;
+	}
+	public int getB() {
+		return b;
+	}
+	public void setB(int b) {
+		this.b = b;
+	}
+	
 
-import java.util.Set;
-
-public interface OrbRepSet {
-	public int getT();
-	public int getK();
-	public int getV();
-	public boolean isEmpty();
-	public int deleteOrbits(Integer[] newRandRow);
-	public Group getGroup();
-	public Iterator<ColGroup> getColGrIterator();
-	public boolean containsOrbit(Interaction interaction);
-	public Set<SymTuple> getOrbits(ColGroup colGr);
 
 }

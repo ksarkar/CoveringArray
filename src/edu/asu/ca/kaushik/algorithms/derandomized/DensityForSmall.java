@@ -16,6 +16,7 @@ package edu.asu.ca.kaushik.algorithms.derandomized;
 
 import java.util.Iterator;
 
+import edu.asu.ca.kaushik.algorithms.structures.ColGroup;
 import edu.asu.ca.kaushik.algorithms.structures.Interaction;
 import edu.asu.ca.kaushik.algorithms.structures.InteractionSet;
 
@@ -37,7 +38,10 @@ public class DensityForSmall extends CondExpEntries {
 		Iterator<Interaction> it = ig.getInteractions().iterator();
 		while(it.hasNext()) {
 			Interaction i = it.next();
-			expCov = expCov +  this.computeExpCov(row, index, v, i);
+			ColGroup cols = i.getCols();
+			if (cols.contains(index)) {
+				expCov = expCov +  this.computeExpCov(row, index, v, i);
+			}
 		}
 		return expCov;
 	}
@@ -49,14 +53,6 @@ public class DensityForSmall extends CondExpEntries {
 			condExp = 1.0d / Math.pow(v, numFreeCol);
 		}
 		return condExp;
-	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

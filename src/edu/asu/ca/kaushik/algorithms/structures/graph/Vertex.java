@@ -15,7 +15,6 @@
 package edu.asu.ca.kaushik.algorithms.structures.graph;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -35,24 +34,7 @@ public class Vertex {
 	}
 
 	public boolean isAdjacent(Vertex v) {
-		int[] thisCols = this.intrctn.getCols().getCols();
-		int[] thisSyms = this.intrctn.getSyms().getSyms();
-		
-		int[] thatCols = v.getInteraction().getCols().getCols();
-		int[] thatSyms = v.getInteraction().getSyms().getSyms();
-		
-		int t = thisCols.length;
-		for (int i = 0; i < t; i++) {
-			for (int j = 0; j < t; j++) {
-				if (thisCols[i] == thatCols[j]) { // same columns
-					if (thisSyms[i] != thatSyms[j]) {
-						return true;
-					}
-				}
-			}
-		}
-		
-		return false;
+		return !this.intrctn.isCompatible(v.getInteraction());
 	}
 	
 	public void addNeighbor(Vertex v) {

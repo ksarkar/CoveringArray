@@ -20,6 +20,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import org.apache.commons.math3.util.CombinatoricsUtils;
+
 import edu.asu.ca.kaushik.algorithms.CAGenAlgo;
 import edu.asu.ca.kaushik.algorithms.structures.ArrayCA;
 import edu.asu.ca.kaushik.algorithms.structures.CA;
@@ -28,9 +30,7 @@ import edu.asu.ca.kaushik.algorithms.structures.ColGrLexIterator;
 import edu.asu.ca.kaushik.algorithms.structures.ColGroup;
 import edu.asu.ca.kaushik.algorithms.structures.Group;
 import edu.asu.ca.kaushik.algorithms.structures.GroupLLLCA;
-import edu.asu.ca.kaushik.algorithms.structures.Helper;
 import edu.asu.ca.kaushik.algorithms.structures.Interaction;
-import edu.asu.ca.kaushik.algorithms.structures.LLLCA;
 import edu.asu.ca.kaushik.algorithms.structures.ListCA;
 import edu.asu.ca.kaushik.algorithms.structures.ListCAExt;
 import edu.asu.ca.kaushik.algorithms.structures.PartialCA;
@@ -39,8 +39,9 @@ public abstract class GroupTwoStage implements CAGenAlgo	{
 	private static final int maxIteration = 20;
 	private int firstStage;
 	private int slackPercent;
-	private int gType;
+	protected int gType;
 	protected String name;
+	private int times;
 	
 	private static String[] groupName = {"Trivial", "Cyclic", "Frobenius"};
 	
@@ -54,11 +55,12 @@ public abstract class GroupTwoStage implements CAGenAlgo	{
 	 * @param gId Type of group. 0 -- trivial group, 1 -- cyclic group, 2 -- Frobenius 
 	 * 			group.
 	 */
-	public GroupTwoStage(int f, int s, int gId) {
+	public GroupTwoStage(int f, int times, int s, int gId) {
 		this.firstStage = f;
 		this.slackPercent = s;
+		this.times = times;
 	
-		this.name = groupName[gId];
+		this.name = "GTS-" + groupName[gId] + "-slack-" + s;
 		this.gType = gId;
 	}
 	
@@ -70,12 +72,13 @@ public abstract class GroupTwoStage implements CAGenAlgo	{
 	@Override
 	public CA generateCA(int t, int k, int v) {
 		assert(k >= 2 * t);
-		int n = this.partialArraySize(t,k,v, this.gType);
-		int numMinUncovOrb = (int)Math.floor(this.expectNumUncovInt(t, k, v, n, this.gType));
+		int n = this.partialArraySize(t,k,v);
+		System.out.println("Target partial array size: " + n);
+		int numMinUncovOrb = (int)Math.floor(this.expectNumUncovOrbs(t, k, v, n));
 		numMinUncovOrb = (int) (1.0 + this.slackPercent/100) * numMinUncovOrb;
 		
 		GroupLLLCA partialCa = new GroupLLLCA(t, k, v, n, this.gType, new Random());
-		this.initSecondStage(partialCa.getGroup());
+		this.initSecondStage(t,k,v,partialCa.getGroup());
 		ColGrIterator clGrIt = new ColGrLexIterator(t, k);
 		int uncovOrbNum;
 		int colGrNum;
@@ -104,6 +107,7 @@ public abstract class GroupTwoStage implements CAGenAlgo	{
 					this.reSampleCols(partialCa, badCols, notCovered);
 					enoughCovered = false;
 					System.out.println("uncovered interaction in coloumn group: " + colGrNum);
+					System.out.println(new Date());
 					break;
 				}
 				colGrNum++;
@@ -119,7 +123,7 @@ public abstract class GroupTwoStage implements CAGenAlgo	{
 		System.out.println("First phase over.");
 		System.out.println("Partial array size: " + n);
 		System.out.println(new Date());
-		System.out.println("Number of uncovered interactions: " + uncovOrbNum);
+		System.out.println("Number of uncovered orbits: " + uncovOrbNum);
 		
 		
 		ListCAExt remCA = new ListCAExt(t, k, v);
@@ -135,6 +139,7 @@ public abstract class GroupTwoStage implements CAGenAlgo	{
 		Group g = partialCa.getGroup();
 		ListCA fullCA = g.develop(ca);
 		
+		System.out.println(new Date());
 		
 		ArrayCA testCA = new ArrayCA(fullCA);
 		ColGroup cols = new ColGroup(new int[0]);
@@ -152,9 +157,79 @@ public abstract class GroupTwoStage implements CAGenAlgo	{
 		}
 	}
 	
-	private double expectNumUncovInt(int t, int k, int v, int n, int gType2) {
-		// TODO Auto-generated method stub
-		return 0;
+	/**
+	 * number of rows in the partial array = ln(A * B * ln(C/(C-1))/times) / ln(C/(C-1))
+	 * Where A = choose(k,t)
+	 * B=C=v^t for the trivial group
+	 * B=C=v^(t-1) for the cyclic gorup
+	 * B=(v^(t-1)-1)/(v-1), C=v^(t-1)/(v-1) for the Frobenius group
+	 */
+	protected int partialArraySize(int t, int k, int v) {
+		double A = CombinatoricsUtils.binomialCoefficientDouble(k, t);
+		double B = 0.0d;
+		double C = 0.0d;
+		
+		switch(this.gType) {
+		case 0: // trivial group
+				B = Math.pow(v, t);
+				C = B;
+				break;
+		case 1: // cyclic group
+				B = Math.pow(v, t-1);
+				C = B;
+				break;
+		case 2: // Frobenius group
+				double vtm1 = Math.pow(v, t-1);
+				B = (vtm1 - 1) / (v - 1);
+				C = vtm1 / (v - 1);
+				break;
+		default:
+				System.err.println("Invalid group Id.");
+				System.exit(1);
+		}
+		
+		double ln = Math.log(C / (C - 1));
+		
+		return (int)Math.ceil(Math.log(A * B * ln / this.times) / ln);
+	}
+	
+	/**
+	 * Expected number of uncovered orbtis = choose(k,t) * B * (1 - 1/C)^n
+	 * where B=C=v^t for trivial group
+	 * B=C=v^(t-1) for cyclic group
+	 * B=(v^(t-1)-1)/(v-1), C=v^(t-1)/(v-1) for Frobenius group.
+	 * @param t
+	 * @param k
+	 * @param v
+	 * @param n
+	 * @return
+	 */
+	private double expectNumUncovOrbs(int t, int k, int v, int n) {
+		double A = CombinatoricsUtils.binomialCoefficientDouble(k, t);
+		double B = 0.0d;
+		double C = 0.0d;
+		
+		switch(this.gType) {
+		case 0: // trivial group
+				B = Math.pow(v, t);
+				C = B;
+				break;
+		case 1: // cyclic group
+				B = Math.pow(v, t-1);
+				C = B;
+				break;
+		case 2: // Frobenius group
+				double vtm1 = Math.pow(v, t-1);
+				B = (vtm1 - 1) / (v - 1);
+				C = vtm1 / (v - 1);
+				break;
+		default:
+				System.err.println("Invalid group Id.");
+				System.exit(1);
+		}
+		
+		double pr = 1 - 1/C;
+		return A * B * Math.pow(pr, n);
 	}
 	
 	private void reSampleCols(GroupLLLCA partialCa, Set<Integer> badCols, 
@@ -203,9 +278,7 @@ public abstract class GroupTwoStage implements CAGenAlgo	{
 		partialCa.reSample(new ColGroup(cols));		
 	}
 
-	
-	protected abstract int partialArraySize(int t, int k, int v, int gType);
-	protected abstract void initSecondStage(Group group);
+	protected abstract void initSecondStage(int t, int k, int v, Group group);
 	protected abstract void cover(List<Interaction> notCovered);
 	protected abstract void reset();
 	protected abstract void secondStage(ListCAExt remCA);

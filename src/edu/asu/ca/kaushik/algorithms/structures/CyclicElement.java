@@ -14,19 +14,19 @@
 
 package edu.asu.ca.kaushik.algorithms.structures;
 
-import java.util.Iterator;
+public class CyclicElement implements GroupElement {
+	private int element;
 
-import java.util.Set;
+	public CyclicElement(int el) {
+		this.element = el;
+	}
 
-public interface OrbRepSet {
-	public int getT();
-	public int getK();
-	public int getV();
-	public boolean isEmpty();
-	public int deleteOrbits(Integer[] newRandRow);
-	public Group getGroup();
-	public Iterator<ColGroup> getColGrIterator();
-	public boolean containsOrbit(Interaction interaction);
-	public Set<SymTuple> getOrbits(ColGroup colGr);
+	public int getElement() {
+		return element;
+	}
 
+	public void setElement(int element) {
+		this.element = element;
+	}
+	
 }

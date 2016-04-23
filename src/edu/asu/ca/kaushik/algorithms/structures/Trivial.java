@@ -73,4 +73,23 @@ public class Trivial implements Group {
 		return symTup;
 	}
 
+	@Override
+	public GroupElement convert(SymTuple tup1, SymTuple tup2) {
+		return tup1.equals(tup2) ? new GroupElement(){} : null;
+	}
+
+	@Override
+	public Interaction act(GroupElement ge, Interaction inter) {
+		if (ge != null) {
+			return inter;
+		} else {
+			return null;
+		}
+	}
+
+	@Override
+	public GroupElement identity() {
+		return new GroupElement(){};
+	}
+
 }

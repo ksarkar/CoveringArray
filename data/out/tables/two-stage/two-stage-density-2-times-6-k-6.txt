@@ -19,3 +19,4 @@ k, TwoStageDensity-2-times-0-slack
 24, 528888
 25, 541381
 26, 553371
+27, 564848

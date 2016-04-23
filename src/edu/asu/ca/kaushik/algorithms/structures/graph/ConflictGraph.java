@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.asu.ca.kaushik.algorithms.structures.Interaction;
-import edu.asu.ca.kaushik.algorithms.structures.ListCA;
 import edu.asu.ca.kaushik.algorithms.structures.ListCAExt;
 
 public class ConflictGraph {
@@ -313,9 +312,14 @@ public class ConflictGraph {
 		
 		minDegVert = this.vertices.remove(index);
 		
-		for (Vertex v : this.vertices) {
-			v.getNeighbors().remove(minDegVert);	
+		List<Vertex> neighbors = minDegVert.getNeighbors();
+		for (Vertex v : neighbors) {
+			v.getNeighbors().remove(minDegVert);
 		}
+		
+		/*for (Vertex v : this.vertices) {
+			v.getNeighbors().remove(minDegVert);	
+		}*/
 		
 		return minDegVert;
 	}

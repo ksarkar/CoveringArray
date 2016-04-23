@@ -1,3 +1,11 @@
 k, TwoStageColoring-3-times-0-slack
 20, 165
 21, 175
+k, TwoStageColoring-3-times-0-slack
+20, 166
+21, 174
+k, TwoStageColoring-3-times-0-slack
+20, 166
+21, 170
+k, TwoStageColoring-3-times-0-slack
+40, 221

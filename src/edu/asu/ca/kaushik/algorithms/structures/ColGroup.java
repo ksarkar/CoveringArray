@@ -164,6 +164,16 @@ public final class ColGroup {
 		}
 		return new ColGroup(newCols);
 	}
+
+	public int numFreeCols(Integer[] row, int v) {
+		int n = 0;
+		for (int i = 0; i < this.len; i++) {
+			if (row[this.cols[i]] == v) {
+				n++;
+			}
+		}
+		return n;
+	}
 	
 	
 

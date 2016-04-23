@@ -1,0 +1,9 @@
+
+k, Trivial
+30, 247
+k, GTS-Trivial-slack-0
+30, 245
+k, GTS-Cyclic-slack-0
+30, 231
+k, GTS-Frobenius-slack-0
+30, 219

@@ -14,9 +14,6 @@
 
 package edu.asu.ca.kaushik.algorithms.structures;
 
-import java.util.Map;
-import java.util.Set;
-
 public class IGSimple extends InteractionGraph {
 
 	public IGSimple(int t, int k, int v) {

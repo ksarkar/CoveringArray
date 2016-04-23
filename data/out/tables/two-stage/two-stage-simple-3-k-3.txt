@@ -200,3 +200,14 @@ k, TwoStageSimple-1-slack
 k, TwoStageSimple-5-slack
 20, 207
 21, 216
+k, TwoStageSimple-5-slack
+20, 206
+21, 215
+k, TwoStageSimple-0-slack
+20, 211
+21, 226
+k, TwoStageSimple-0-slack
+4, 63
+k, TwoStageSimple-0-slack
+k, TwoStageSimple-0-slack
+4, 63

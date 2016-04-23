@@ -14,6 +14,9 @@
 
 package edu.asu.ca.kaushik.algorithms.structures;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Interaction {
 	ColGroup cols;
@@ -106,6 +109,88 @@ public class Interaction {
 		Integer[] row = {0, 0, 2, 1};
 		int v = 2;
 		System.out.println(in.isCompatible(row, v));
+	}
+	
+	public boolean isCompatible(Integer[] row, Group g, int v) {
+		int[] cols = this.getCols().getCols();
+		int[] syms = this.getSyms().getSyms();
+		int t = cols.length;
+		List<Integer> fixed = new ArrayList<Integer>();
+		for (int i = 0; i < t; i++) {
+			if (row[cols[i]] != v) { // not a starred entry
+				fixed.add(i);
+			}
+		}
+		
+		if (fixed.size() == 0) {
+			return true;
+		} else {
+			int l = fixed.size();
+			int[] s1 = new int[l];
+			int[] s2 = new int[l];
+			for (int i = 0; i < l; i++) {
+				int ind = fixed.get(i);
+				s1[i] = syms[ind];
+				s2[i] = row[cols[ind]];
+			}
+			return g.isInSameOrbit(new SymTuple(s1), new SymTuple(s2));
+		}
+	}
+	public boolean isCompatible(Interaction int2) {
+		int[] c1 = this.getCols().getCols();
+		int[] s1 = this.getSyms().getSyms();
+		
+		int[] c2 = int2.getCols().getCols();
+		int[] s2 = int2.getSyms().getSyms();
+		
+		int t = c1.length;
+		for (int i = 0; i < t; i++) {
+			for (int j = 0; j < t; j++) {
+				if (c1[i] == c2[j]) { // same columns
+					if (s1[i] != s2[j]) {
+						return false;
+					}
+				}
+			}
+		}
+		
+		return true;		
+	}
+	public GroupElement convert(Interaction orbit, Group g) {
+		int[] c1 = this.getCols().getCols();
+		int[] s1 = this.getSyms().getSyms();
+		
+		int[] c2 = orbit.getCols().getCols();
+		int[] s2 = orbit.getSyms().getSyms();
+		
+		int t = c1.length;
+		List<Integer> cols1 = new ArrayList<Integer>();
+		List<Integer> cols2 = new ArrayList<Integer>();
+		
+		for (int i = 0; i < t; i++) {
+			for (int j = 0; j < t; j++) {
+				if (c1[i] == c2[j]) { // same column
+					cols1.add(i);
+					cols2.add(j);
+				}
+			}
+		}
+		
+		if (cols1.size() == 0) {
+			return g.identity();
+		} else {
+			int l = cols1.size();
+			int[] sym1 = new int[l];
+			int[] sym2 = new int[l];
+			for (int i = 0; i < l; i++) {
+				int ind1 = cols1.get(i);
+				int ind2 = cols2.get(i);
+				sym1[i] = s1[ind1];
+				sym2[i] = s2[ind2];
+			}
+			
+			return g.convert(new SymTuple(sym1), new SymTuple(sym2));
+		}
 	}
 
 }

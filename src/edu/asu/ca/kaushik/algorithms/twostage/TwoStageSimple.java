@@ -133,6 +133,9 @@ public class TwoStageSimple extends TwoStage {
 		runner.setParam(t, v, k1, k2);
 		runner.setAlgos(algoList);
 		runner.run();
+		
+		/*TwoStage gts = new TwoStageSimple(0,0,0);
+		System.out.println(gts.partialArraySize(6, 53, 3));*/
 	}
 
 }
