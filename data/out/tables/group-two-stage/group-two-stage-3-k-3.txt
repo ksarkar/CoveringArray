@@ -1,0 +1,28 @@
+k, GTS-Trivial-slack-0-greedy-1-times, GTS-Trivial-slack-0-density-1-times, GTS-Trivial-slack-0-coloring-1-times, GTS-Trivial-slack-0-simple
+20, 192, 193, 191, 207
+21, 195, 196, 195, 211
+22, 198, 201, 200, 232
+23, 203, 207, 206, 257
+24, 207, 206, 206, 223
+25, 209, 211, 210, 241
+k, GTS-Frobenius-slack-0-greedy-3-times, GTS-Frobenius-slack-0-density-3-times, GTS-Frobenius-slack-0-coloring-3-times
+70, 255, 255, 249
+71, 249, 255, 249
+72, 255, 255, 249
+73, 255, 261, 255
+74, 249, 261, 255
+75, 249, 255, 249
+k, GTS-Frobenius-slack-0-greedy-3-times, GTS-Frobenius-slack-0-density-3-times, GTS-Frobenius-slack-0-coloring-3-times
+20, 165, 159, 159
+21, 165, 165, 165
+22, 159, 171, 171
+23, 171, 171, 165
+24, 171, 171, 171
+25, 177, 183, 177
+k, GTS-Frobenius-slack-0-density-3-times, GTS-Frobenius-slack-0-greedy-3-times, GTS-Frobenius-slack-0-coloring-3-times
+20, 153, 159, 153
+21, 165, 159, 159
+22, 165, 165, 165
+23, 171, 171, 171
+24, 177, 171, 171
+25, 183, 171, 177

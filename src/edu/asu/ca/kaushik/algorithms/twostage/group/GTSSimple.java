@@ -26,7 +26,7 @@ import edu.asu.ca.kaushik.outputformatter.OutputFormatter;
 import edu.asu.ca.kaushik.outputformatter.TableOutputFormatter;
 import edu.asu.ca.kaushik.scripts.Runner;
 
-public class GroupTwoStageSimple extends GroupTwoStage {
+public class GTSSimple extends GroupTwoStage {
 	private List<Interaction> uncovOrbs;
 	
 	/**
@@ -35,29 +35,29 @@ public class GroupTwoStageSimple extends GroupTwoStage {
 	 * @param s
 	 * @param gId
 	 */
-	public GroupTwoStageSimple(int f, int s, int gId) {
+	public GTSSimple(int f, int s, int gId) {
 		super(f, 1, s, gId);
 		this.uncovOrbs = new ArrayList<Interaction>();
 		super.name = super.name + "-simple";
 	}
 
 	@Override
-	protected void initSecondStage(int t, int k, int v, Group group) {
+	public void initSecondStage(int t, int k, int v, Group group) {
 		
 	}
 
 	@Override
-	protected void cover(List<Interaction> notCovered) {
+	public void cover(List<Interaction> notCovered) {
 		this.uncovOrbs.addAll(notCovered);
 	}
 
 	@Override
-	protected void reset() {
+	public void reset() {
 		this.uncovOrbs = new ArrayList<Interaction>();
 	}
 
 	@Override
-	protected void secondStage(ListCAExt remCA) {
+	public void secondStage(ListCAExt remCA) {
 		int k = remCA.getK();
 		int t = remCA.getT();
 		
@@ -99,7 +99,7 @@ public class GroupTwoStageSimple extends GroupTwoStage {
 		
 		List<CAGenAlgo> algoList = new ArrayList<CAGenAlgo>();
 		
-		algoList.add(new GroupTwoStageSimple(f, s, g));
+		algoList.add(new GTSSimple(f, s, g));
 		System.out.println("times = " + times);
 		
 		OutputFormatter formatter = new TableOutputFormatter("data\\out\\tables\\group-two-stage"

@@ -14,6 +14,10 @@
 
 package edu.asu.ca.kaushik.algorithms.twostage.group;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -22,9 +26,6 @@ import java.util.Set;
 
 import org.apache.commons.math3.util.CombinatoricsUtils;
 
-import edu.asu.ca.kaushik.algorithms.CAGenAlgo;
-import edu.asu.ca.kaushik.algorithms.structures.ArrayCA;
-import edu.asu.ca.kaushik.algorithms.structures.CA;
 import edu.asu.ca.kaushik.algorithms.structures.ColGrIterator;
 import edu.asu.ca.kaushik.algorithms.structures.ColGrLexIterator;
 import edu.asu.ca.kaushik.algorithms.structures.ColGroup;
@@ -33,44 +34,40 @@ import edu.asu.ca.kaushik.algorithms.structures.GroupLLLCA;
 import edu.asu.ca.kaushik.algorithms.structures.Interaction;
 import edu.asu.ca.kaushik.algorithms.structures.ListCA;
 import edu.asu.ca.kaushik.algorithms.structures.ListCAExt;
-import edu.asu.ca.kaushik.algorithms.structures.PartialCA;
 
-public abstract class GroupTwoStage implements CAGenAlgo	{
+public class Script {
 	private static final int maxIteration = 20;
 	private int firstStage;
 	private int slackPercent;
 	protected int gType;
-	protected String name;
 	private int times;
+	private GroupTwoStage[] algos;
 	
-	private static String[] groupName = {"Trivial", "Cyclic", "Frobenius"};
+	private String dirName;
+	private String fNamePref;
+	private int t, v;
 	
-	/**
-	 * Two stage algorithm with group action
-	 * @param f flag for the random partial array generation algorithm.
-	 * 			Valid values: 0 -- uniform random, 
-	 * 			1 -- re-sample only the last offending interaction, 
-	 * 			2 -- re-sample all the offending interactions
-	 * @param s slack in number of uncovered interaction (in percent).
-	 * @param gId Type of group. 0 -- trivial group, 1 -- cyclic group, 2 -- Frobenius 
-	 * 			group.
-	 */
-	public GroupTwoStage(int f, int times, int s, int gId) {
+	
+	public Script(int f, int times, int s, int gId) {
 		this.firstStage = f;
 		this.slackPercent = s;
 		this.times = times;
 	
-		this.name = "GTS-" + groupName[gId] + "-slack-" + s;
 		this.gType = gId;
-	}
-	
-	@Override
-	public String getName() {
-		return name;
+		
+		int numAlgos = times == 1 ? 4 : 3;
+		this.algos = new GroupTwoStage[numAlgos];
+		
+		this.algos[0] = new GTSDensity(f,times,s,gId);
+		this.algos[1] = new GTSOnlineGreedy(f,times,s,gId);
+		this.algos[2] = new GTSColoring(f,times,s,gId);
+		if (times == 1) {
+			this.algos[3] = new GTSSimple(f,s,gId);
+		}
+		
 	}
 
-	@Override
-	public CA generateCA(int t, int k, int v) {
+	public GroupLLLCA firstStage(int t, int k, int v) {
 		assert(k >= 2 * t);
 		int n = this.partialArraySize(t,k,v);
 		System.out.println("Target partial array size: " + n);
@@ -120,34 +117,8 @@ public abstract class GroupTwoStage implements CAGenAlgo	{
 			//System.exit(1);
 		}
 		
-		System.out.println("First phase over.");
-		System.out.println("Partial array size: " + n);
-		System.out.println(new Date());
 		System.out.println("Number of uncovered orbits: " + uncovOrbNum);
-		
-		
-		ListCAExt remCA = new ListCAExt(t, k, v);
-		this.secondStage(remCA);
-		ListCA ca = new ListCAExt(t, k, v);
-		ca.join(partialCa);
-		ca.join(remCA);
-		
-		((ListCAExt)ca).copyInfo(remCA);
-		
-		System.out.println("Number of rows added in second phase: " + remCA.getNumRows());
-		
-		Group g = partialCa.getGroup();
-		ListCA fullCA = g.develop(ca);
-		
-		System.out.println(new Date());
-		
-		ArrayCA testCA = new ArrayCA(fullCA);
-		ColGroup cols = new ColGroup(new int[0]);
-		System.out.println("\nThis " + (testCA.isCompleteCA(cols) ? "is a CA" 
-				: "is not a CA\n"));
-		
-		
-		return fullCA;
+		return partialCa;
 	}
 
 	private void addCols(Set<Integer> badCols, ColGroup cols) {
@@ -277,21 +248,147 @@ public abstract class GroupTwoStage implements CAGenAlgo	{
 		}
 		partialCa.reSample(new ColGroup(cols));		
 	}
-
-	public abstract void initSecondStage(int t, int k, int v, Group group);
-	public abstract void cover(List<Interaction> notCovered);
-	public abstract void reset();
-	public abstract void secondStage(ListCAExt remCA);
-
-	@Override
-	public void setNumSamples(int numSamples) {
-		assert false;
+	
+	private void initSecondStage(int t, int k, int v, Group group) {
+		for (int i = 0; i < this.algos.length; i++) {
+			this.algos[i].initSecondStage(t, k, v, group);
+		}
 	}
 	
-	@Override
-	public CA completeCA(PartialCA partialCA) {
-		assert false;
-		return null;
+	private void cover(List<Interaction> notCovered) {
+		for (int i = 0; i < this.algos.length; i++) {
+			this.algos[i].cover(notCovered);
+		}
+	}
+	private void reset() {
+		for (int i = 0; i < this.algos.length; i++) {
+			this.algos[i].reset();
+		}
+	}
+	
+	private void directory(String dirName, String fileNamePref, int t, int v) throws IOException {
+		this.dirName = dirName;
+		this.fNamePref = fileNamePref;
+		this.t = t;
+		this.v = v;
+		
+		File newDir = new File(this.dirName);
+		newDir.mkdirs();
+		
+		this.writeHeader();
+	}
+	
+	private void writeHeader() throws IOException {
+		String fileName = this.getFileName();
+		String header = this.getHeader();
+		
+		PrintWriter out = null;
+		try {
+			out = new PrintWriter(new FileWriter(fileName, true));
+			out.println(header);
+		} finally {
+			if (out != null){
+				out.close();
+			}
+		}
+		
+	}
+	
+	private String getFileName() {
+		return this.dirName+ "\\" + (this.fNamePref.equals("") ? "" : (this.fNamePref + "-"))
+				+ this.t + "-k-" + this.v + ".txt";
 	}
 
+	private String getHeader() {
+		String header = "k";
+		for (int i = 0; i < this.algos.length; i++){
+			header = header + ", " + this.algos[i].getName();
+		}
+		return header;
+	}
+	
+	private void writeK(int k) throws IOException {
+		this.writeToFile("" + k);
+	}
+
+	private void appendToFile(ListCA fullCA) throws IOException {
+		this.writeToFile(", " + fullCA.getNumRows());
+	}
+	
+	private void addNewLine() throws IOException {
+		this.writeToFile("\n");		
+	}
+	
+	private void writeToFile(String s) throws IOException {
+		PrintWriter out = null;
+		try {
+			out = new PrintWriter(new FileWriter(this.getFileName(), true));
+			out.print(s);
+		} finally {
+			if (out != null){
+				out.close();
+			}
+		}
+	}
+	
+	public static void main(String[] args) throws IOException {
+		int t = 0, k1 = 0, k2 = 0, v = 0, times = 0, f = 0, s = 0, gId = -1;
+		
+		if (args.length == 8) {
+			t = Integer.parseInt(args[0]);
+			v = Integer.parseInt(args[1]);
+			k1 = Integer.parseInt(args[2]);
+			k2 = Integer.parseInt(args[3]);
+			times = Integer.parseInt(args[4]);
+			f = Integer.parseInt(args[5]);
+			s = Integer.parseInt(args[6]);
+			gId = Integer.parseInt(args[7]);
+		} else {
+			System.err.println("Need 8 arguments- t, v, kStart, kEnd, times, firstStage, slack percent and group type");
+			System.exit(1);
+		}
+		
+		Script scr = new Script(f, times, s, gId);
+		scr.directory("data\\out\\tables\\group-two-stage", "group-two-stage", t,v);
+		
+		for (int k = k1; k <= k2; k++) {
+			scr.writeK(k);
+			System.out.println();
+			System.out.println("k = " + k);
+			
+			System.out.println("Running first stage...");
+			GroupLLLCA fca = scr.firstStage(t,k,v);
+			System.out.println("Partial array size: " + fca.getNumRows());
+			System.out.println(new Date());
+			
+			for (int i = 0; i < scr.algos.length; i++) {
+				System.out.println();
+				System.out.println("Running second stage...");
+				System.out.println("Running " + scr.algos[i].getName() + "...");
+				ListCAExt sca = new ListCAExt(t, k, v);
+				scr.algos[i].secondStage(sca);
+				ListCA ca = new ListCAExt(t, k, v);
+				ca.join(fca);
+				ca.join(sca);
+				
+				((ListCAExt)ca).copyInfo(sca);
+				
+				System.out.println("Number of rows added in second phase: " + sca.getNumRows());
+				
+				Group g = fca.getGroup();
+				ListCA fullCA = g.develop(ca);
+				
+				System.out.println(new Date());
+				
+				/*ArrayCA testCA = new ArrayCA(fullCA);
+				ColGroup cols = new ColGroup(new int[0]);
+				System.out.println("\nThis " + (testCA.isCompleteCA(cols) ? "is a CA" 
+						: "is not a CA\n"));*/
+				
+				
+				scr.appendToFile(fullCA);
+			}
+			scr.addNewLine();
+		}
+	}
 }

@@ -1,0 +1,29 @@
+k, GTS-Cyclic-slack-0-density-1-times, GTS-Cyclic-slack-0-greedy-1-times, GTS-Cyclic-slack-0-coloring-1-times, GTS-Cyclic-slack-0-simple
+31, 212890, 213165, 212945, 226000
+32, 217270, 216440, 217585, 244715
+33, 221290, 219450, 221770, 263145
+34, 222210, 222450, 222300, 235835
+35, 225120, 225330, 225130, 238705
+36, 229020, 228140, 229235, 256935
+k, GTS-Cyclic-slack-0-density-2-times, GTS-Cyclic-slack-0-greedy-2-times, GTS-Cyclic-slack-0-coloring-2-times
+31, 203265, 204060, 203650
+32, 208225, 207165, 209110
+33, 209540, 210255, 209865
+34, 212510, 213225, 212830
+35, 217070, 216050, 217795
+36, 218155, 218835, 218480
+k, GTS-Cyclic-slack-0-density-3-times, GTS-Cyclic-slack-0-greedy-3-times, GTS-Cyclic-slack-0-coloring-3-times
+31, 197870, 199180, 198455
+32, 203250, 202255, 204495
+33, 204080, 205380, 204720
+34, 207025, 208225, 207790
+35, 212040, 211080, 213425
+36, 212695, 213770, 213185
+k, GTS-Frobenius-slack-0-density-1-times, GTS-Frobenius-slack-0-greedy-1-times, GTS-Frobenius-slack-0-coloring-1-times, GTS-Frobenius-slack-0-simple
+31k, GTS-Frobenius-slack-0-density-2-times, GTS-Frobenius-slack-0-greedy-2-times, GTS-Frobenius-slack-0-coloring-2-times
+31, 203225, 203785, 203485
+32, 208065, 206965, 208965
+33, 209405, 209985, 209645
+34, 214145, 213005, 214825
+35, 215265, 215765, 215545
+36, 218025, 218605, 218285

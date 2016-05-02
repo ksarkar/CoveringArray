@@ -1,0 +1,14 @@
+k, GTS-Cyclic-slack-0-density-1-times, GTS-Cyclic-slack-0-greedy-1-times, GTS-Cyclic-slack-0-coloring-1-times, GTS-Cyclic-slack-0-simple
+53
+k, GTS-Cyclic-slack-0-density-1-times, GTS-Cyclic-slack-0-greedy-1-times, GTS-Cyclic-slack-0-coloring-1-times, GTS-Cyclic-slack-0-simple
+53, 12411, 12405, 12405, 13053
+54, 12546, 12489, 12543, 13839
+55, 12663, 12573, 12663, 14598
+56, 12663, 12660, 12651, 13284
+57, 12750, 12744, 12729, 13368
+k, GTS-Frobenius-slack-0-density-2-times, GTS-Frobenius-slack-0-greedy-2-times, GTS-Frobenius-slack-0-coloring-2-times
+53, 11931, 11931, 11919
+54, 12087, 12021, 12087
+55, 12231, 12105, 12237
+56, 12183, 12171, 12171
+57, 12255, 12255, 12249

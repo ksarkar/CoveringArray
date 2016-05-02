@@ -1,0 +1,15 @@
+k, GTS-Cyclic-slack-0-density-1-times, GTS-Cyclic-slack-0-greedy-1-times, GTS-Cyclic-slack-0-coloring-1-times, GTS-Cyclic-slack-0-simple
+39, 61864, 61896, 61860, 65452,
+40, 62784, 62516, 62820, 69916,
+41, 63152, 63184, 63144, 66740,
+42, 63784, 63800, 63780, 67408,
+43, 64680, 64408, 64692, 72096,
+44, 64976, 64988, 64964, 68556,
+k, GTS-Cyclic-slack-0-density-2-times, GTS-Cyclic-slack-0-greedy-2-times, GTS-Cyclic-slack-0-coloring-2-times
+39, 59304, 59412, 59336
+40, 59964, 60040, 59996
+41, 61032, 60700, 61156
+42, 61976, 61320, 62196
+43, 62852, 61908, 63192
+44, 63672, 62512, 64096
+

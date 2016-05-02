@@ -12,7 +12,7 @@ k, TwoStageDensity-2-times-0-slack
 22, 502009
 23, 515774
 k, TwoStageDensity-2-times-0-slack
-18, 426238
+18, 426238, incorrect
 k, TwoStageDensity-2-times-0-slack
 k, TwoStageDensity-2-times-0-slack
 k, TwoStageDensity-2-times-0-slack
@@ -20,3 +20,7 @@ k, TwoStageDensity-2-times-0-slack
 25, 541381
 26, 553371
 27, 564848
+k, TwoStageDensity-2-times-0-slack
+18, 426238, incorrect
+k, TwoStageDensity-2-times-0-slack
+18, 438754

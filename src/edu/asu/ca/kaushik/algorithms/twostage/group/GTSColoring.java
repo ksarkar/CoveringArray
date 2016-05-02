@@ -40,23 +40,23 @@ public class GTSColoring extends GroupTwoStage {
 	}
 
 	@Override
-	protected void initSecondStage(int t, int k, int v, Group group) {
+	public void initSecondStage(int t, int k, int v, Group group) {
 		this.g = group;
 	}
 
 	@Override
-	protected void cover(List<Interaction> notCovered) {
+	public void cover(List<Interaction> notCovered) {
 		this.orbits.addAll(notCovered);
 	}
 
 	@Override
-	protected void reset() {
+	public void reset() {
 		this.orbits = new ArrayList<Interaction>();
 
 	}
 
 	@Override
-	protected void secondStage(ListCAExt remCA) {
+	public void secondStage(ListCAExt remCA) {
 		System.out.println("Creating conflict graph...");
 		OrbitConflictGraph graph = new OrbitConflictGraph(this.orbits, this.g);
 		System.out.println("Number of edges: " + graph.getNumEdges());

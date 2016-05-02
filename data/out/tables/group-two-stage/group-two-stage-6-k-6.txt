@@ -1,0 +1,27 @@
+k, GTS-Cyclic-slack-0-density-1-times, GTS-Cyclic-slack-0-greedy-1-times, GTS-Cyclic-slack-0-coloring-1-times, GTS-Cyclic-slack-0-simple
+17, 447732, 449778, 448530, 485616
+18, 466326, 468156, 467232, 504546
+19, 488454, 485586, 490488, 568158
+20, 500172, 501972, 500880, 539280
+21, 519966, 517236, 521730, 600564
+22, 530178, 531852, 530832, 569706
+23, 548196, 545562, 549660, 628692
+24, 557280, 558888, 557790, 597378
+25, 573882, 571380, 575010, 655734
+26, 582030, 583320, 582546, 622290
+27, 597246, 594786, 598620, 679854
+k, GTS-Cyclic-slack-0-density-2-times, GTS-Cyclic-slack-0-greedy-2-times, GTS-Cyclic-slack-0-coloring-2-times
+17, 420252, 424842, 422736
+18, 438762, 443118, 440922
+19, 462906, 460152
+k, GTS-Cyclic-slack-0-density-2-times, GTS-Cyclic-slack-0-greedy-2-times, GTS-Cyclic-slack-0-coloring-2-times
+20, 472158, 476328, 474252
+21, 487500, 491514, 489270
+22, 501852, 505884, 503580
+23, 521760, 519330
+k, GTS-Cyclic-slack-0-density-2-times, GTS-Cyclic-slack-0-greedy-2-times, GTS-Cyclic-slack-0-coloring-2-times
+24, 528828, 532368, 530340
+25, 547146, 544524
+k, GTS-Cyclic-slack-0-density-2-times, GTS-Cyclic-slack-0-greedy-2-times, GTS-Cyclic-slack-0-coloring-2-times
+26, 543684, 543684, 543684
+27, 564756, 568050, 566244

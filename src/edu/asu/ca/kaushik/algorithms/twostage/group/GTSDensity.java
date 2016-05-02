@@ -44,7 +44,7 @@ public class GTSDensity extends GroupTwoStage {
 	}
 
 	@Override
-	protected void initSecondStage(int t, int k, int v, Group group) {
+	public void initSecondStage(int t, int k, int v, Group group) {
 		this.g = group;
 		this.t = t;
 		this.k = k;
@@ -52,17 +52,17 @@ public class GTSDensity extends GroupTwoStage {
 	}
 
 	@Override
-	protected void cover(List<Interaction> notCovered) {
+	public void cover(List<Interaction> notCovered) {
 		this.orbits.addAll(notCovered);
 	}
 
 	@Override
-	protected void reset() {
+	public void reset() {
 		this.orbits = new ArrayList<Interaction>();
 	}
 
 	@Override
-	protected void secondStage(ListCAExt remCA) {
+	public void secondStage(ListCAExt remCA) {
 		GroupDensity algo = new GroupDensityForSmall(this.gId);
 		//OrbRepSet s = new SmallOrbRepSet(this.orbits, this.g);
 		OrbRepSet s = new OrbRepMap(this.orbits, this.g, this.t, this.k, this.v);

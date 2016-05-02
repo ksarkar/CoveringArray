@@ -41,7 +41,7 @@ public class GTSOnlineGreedy extends GroupTwoStage {
 	}
 
 	@Override
-	protected void initSecondStage(int t, int k, int v, Group group) {
+	public void initSecondStage(int t, int k, int v, Group group) {
 		this.t = t;
 		this.k = k;
 		this.v = v;
@@ -50,7 +50,7 @@ public class GTSOnlineGreedy extends GroupTwoStage {
 	}
 
 	@Override
-	protected void cover(List<Interaction> notCovered) {
+	public void cover(List<Interaction> notCovered) {
 		for (Interaction orbit : notCovered) {
 			if (!greedyCover(orbit, this.rem, this.g)) {
 				Integer[] row = getNewRow(this.k, this.v, orbit);
@@ -124,12 +124,12 @@ public class GTSOnlineGreedy extends GroupTwoStage {
 	}
 
 	@Override
-	protected void reset() {
+	public void reset() {
 		this.rem = new ListCA(this.t, this.k, this.v);
 	}
 
 	@Override
-	protected void secondStage(ListCAExt remCA) {
+	public void secondStage(ListCAExt remCA) {
 		Iterator<Integer[]> it = this.rem.iterator();
 		while (it.hasNext()) {
 			remCA.addRow(removeStarEntries(it.next(), this.v));
