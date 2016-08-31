@@ -7,3 +7,7 @@ k, GTS-Cyclic-slack-0
 30, 231
 k, GTS-Frobenius-slack-0
 30, 219
+k, GTS-Frobenius-slack-0-simple
+20, 189
+k, GTS-Frobenius-slack-0-simple
+21, 189

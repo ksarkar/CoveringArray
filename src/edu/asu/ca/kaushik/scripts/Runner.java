@@ -16,7 +16,9 @@ package edu.asu.ca.kaushik.scripts;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 
 import edu.asu.ca.kaushik.algorithms.CAGenAlgo;
 import edu.asu.ca.kaushik.algorithms.structures.CA;
@@ -29,9 +31,7 @@ public class Runner {
 
 	private int t;
 	private int v;
-	private int k_start;
-	private int k_fin;
-	private int k_step;
+	private Iterator<Integer> kItr;
 	List<CAGenAlgo> algos;
 	
 	private OutputFormatter formatter;
@@ -41,16 +41,47 @@ public class Runner {
 		this.formatter = formatter;
 	}
 
-	public void setParam(int t, int v, int k1, int k2, int ks) {
+	public void setParam(int t, int v, final int k1, final int k2, int ks) {
 		this.t = t;
 		this.v = v;
-		this.k_start = k1;
-		this.k_fin = k2;
-		this.k_step = ks;
+		
+		this.kItr = new Iterator<Integer>() {
+			
+			int counter = k1;
+
+			@Override
+			public void forEachRemaining(Consumer<? super Integer> arg0) {
+				// Dummy
+				
+			}
+
+			@Override
+			public boolean hasNext() {
+				return counter <= k2;
+			}
+
+			@Override
+			public Integer next() {
+				return counter++;
+			}
+
+			@Override
+			public void remove() {
+				// Dummy
+				
+			}
+			
+		};
 	}
 	
 	public void setParam(int t, int v, int k1, int k2) {
 		this.setParam(t, v, k1, k2, 1);
+	}
+	
+	public void setParam(int t, int v, Iterator<Integer> kIt) {
+		this.t = t;
+		this.v = v;
+		this.kItr = kIt;
 	}
 	
 	public void setAlgo(List<String> algoNames){
@@ -73,7 +104,8 @@ public class Runner {
 	public void run() throws IOException {
 		this.formatter.preprocess(this.t, this.v);
 	
-		for (int k = this.k_start; k <= this.k_fin; k = k + this.k_step){
+		while (this.kItr.hasNext()){
+			int k = this.kItr.next();
 			this.runAlgos(k);
 		}
 	}

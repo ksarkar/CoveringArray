@@ -100,10 +100,10 @@ public class ColGrLexIterator implements ColGrIterator {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		int t = 6;
-		int k = 17;
+		int t = 2;
+		int k = 150;
 		
-		System.out.println("Recursive Memory stored:");
+		/*System.out.println("Recursive Memory stored:");
 		System.out.println(new Date());
 		ColGrIterator ci = new ColGrIterator2(t,k);
 		long tot = 0;
@@ -115,12 +115,12 @@ public class ColGrLexIterator implements ColGrIterator {
 		System.out.println(new Date());
 		System.out.println("total = " + tot);
 		
-		System.out.println();
+		System.out.println();*/
 		
 		System.out.println("Lex order:");
 		System.out.println(new Date());
-		ci = new ColGrLexIterator(t,k);
-		tot = 0;
+		ColGrIterator ci = new ColGrLexIterator(t,k);
+		int tot = 0;
 		while(ci.hasNext()) {
 			//System.out.println(ci.next());
 			ci.next();

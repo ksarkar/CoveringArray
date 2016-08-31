@@ -103,7 +103,7 @@ public class GTSSimple extends GroupTwoStage {
 		System.out.println("times = " + times);
 		
 		OutputFormatter formatter = new TableOutputFormatter("data\\out\\tables\\group-two-stage"
-				, "gorup-two-stage-simple");
+				, "gorup-two-stage-simple-" + g + "-group");
 		
 		Runner runner = new Runner(formatter);
 		runner.setParam(t, v, k1, k2);

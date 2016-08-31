@@ -1,0 +1,9 @@
+k, GTS-Cyclic-slack-0-simple
+k, GTS-Cyclic-slack-0-simple
+21, 554082
+27, 633852
+k, GTS-Cyclic-slack-0-simple
+k, GTS-Cyclic-slack-0-simple
+k, GTS-Cyclic-slack-0-simple
+27, 633972
+27, 633294

@@ -51,6 +51,26 @@ public class ArrayCA implements CA {
 		}
 	}
 	
+	public ArrayCA(int t, int k, int v, int n, int r) {
+		this.t = t;
+		this.k = k;
+		this.v = v;
+		
+		this.N = n;
+		
+		ca = new int[this.N][this.k];
+		
+		this.symTups = Helper.createAllSymTuples(this.t, this.v);
+		for (int i = 0; i < r; i++) {
+			this.symTups.remove(0);
+		}
+		
+		this.covered = new HashMap<SymTuple,Boolean>();
+		for (SymTuple syms : symTups) {
+			covered.put(syms, false);
+		}
+	}
+	
 	public ArrayCA(CA c) {		
 		this.t = c.getT();
 		this.k = c.getK();
@@ -76,7 +96,7 @@ public class ArrayCA implements CA {
 			covered.put(syms, false);
 		}
 	}
-	
+
 	public void setCA(int i, int j, int a) {
 		assert((i < this.N) && (j < this.k) && (a < this.v));
 		this.ca[i][j] = a;		
@@ -254,10 +274,18 @@ public class ArrayCA implements CA {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		int[][] a = {{1, 2, 3}, {4, 5, 6}};
+		/*int[][] a = {{1, 2, 3}, {4, 5, 6}};
 		for (int i = 0 ; i < 2; i++) {
 			System.out.print(Arrays.toString(a[i]));
+		}*/
+		
+		List<SymTuple> l = Helper.createAllSymTuples(2, 3);
+		System.out.println(l.size());
+		for (int i = 0; i < 2; i++) {
+			l.remove(0);
 		}
+		
+		System.out.println(l.size());
 
 	}
 

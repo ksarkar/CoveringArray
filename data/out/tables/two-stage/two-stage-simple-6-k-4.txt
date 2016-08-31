@@ -12,3 +12,6 @@ k, TwoStageSimple-0-slack
 42, 71537
 43, 76202
 44, 68629
+k, TwoStageSimple-0-slack
+k, TwoStageSimple-0-slack
+43, 68064

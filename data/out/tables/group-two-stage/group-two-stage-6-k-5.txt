@@ -27,3 +27,9 @@ k, GTS-Frobenius-slack-0-density-1-times, GTS-Frobenius-slack-0-greedy-1-times, 
 34, 214145, 213005, 214825
 35, 215265, 215765, 215545
 36, 218025, 218605, 218285
+k, GTS-Frobenius-slack-0-density-2-times, GTS-Frobenius-slack-0-greedy-2-times, GTS-Frobenius-slack-0-coloring-2-times
+55, 259565, 259785, 259625
+k, GTS-Frobenius-slack-0-density-2-times, GTS-Frobenius-slack-0-greedy-2-times, GTS-Frobenius-slack-0-coloring-2-times
+60, 267945, 268185, 268025
+k, GTS-Frobenius-slack-0-density-2-times, GTS-Frobenius-slack-0-greedy-2-times, GTS-Frobenius-slack-0-coloring-2-times
+50, 250325, 250625, 250365

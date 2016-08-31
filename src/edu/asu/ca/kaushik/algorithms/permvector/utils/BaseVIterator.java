@@ -29,14 +29,19 @@ public class BaseVIterator {
 	 * @param t
 	 * @param v
 	 */
-	public BaseVIterator(int t, int v) {
+	public BaseVIterator(int t, int v, int origin) {	
 		this.t = t;
 		this.v = v;
-		this.max = ((int)(Math.pow(this.v, this.t)) - this.v);
-		this.count = 0;
+		this.max = (int)(Math.pow(this.v, this.t));
+		assert(origin <= max);
+		
 		this.beta = new int[this.t];
-		// discard the first v numbers, i.e. start from v-1
-		this.beta[0] = this.v - 1;
+		this.beta[0] = -1;
+		
+		while (origin > 1) {
+			this.next();
+			origin--;
+		}
 	}
 	
 	public boolean hasNext() {
@@ -67,7 +72,7 @@ public class BaseVIterator {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		BaseVIterator it = new BaseVIterator(3,5);
+		BaseVIterator it = new BaseVIterator(3,3, 4);
 		while(it.hasNext()) {
 			System.out.println(Arrays.toString(it.next()));
 		}

@@ -141,10 +141,10 @@ public abstract class GroupTwoStage implements CAGenAlgo	{
 		
 		System.out.println(new Date());
 		
-		ArrayCA testCA = new ArrayCA(fullCA);
+		/*ArrayCA testCA = new ArrayCA(fullCA);
 		ColGroup cols = new ColGroup(new int[0]);
 		System.out.println("\nThis " + (testCA.isCompleteCA(cols) ? "is a CA" 
-				: "is not a CA\n"));
+				: "is not a CA\n"));*/
 		
 		
 		return fullCA;
@@ -161,7 +161,7 @@ public abstract class GroupTwoStage implements CAGenAlgo	{
 	 * number of rows in the partial array = ln(A * B * ln(C/(C-1))/times) / ln(C/(C-1))
 	 * Where A = choose(k,t)
 	 * B=C=v^t for the trivial group
-	 * B=C=v^(t-1) for the cyclic gorup
+	 * B=C=v^(t-1) for the cyclic group
 	 * B=(v^(t-1)-1)/(v-1), C=v^(t-1)/(v-1) for the Frobenius group
 	 */
 	protected int partialArraySize(int t, int k, int v) {

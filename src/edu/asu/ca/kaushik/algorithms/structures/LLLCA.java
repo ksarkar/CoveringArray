@@ -43,6 +43,17 @@ public class LLLCA extends ArrayCA {
 		this(t, k, v, computeNumRows(t, k, v));
 	}
 	
+	public LLLCA(int t, int k, int v, int n, int r, Random random) {
+		super(t,k,v,n,r);
+		this.rand = random;
+		
+		for (int i = 0; i < super.N; i++) {
+			for (int j = 0; j < this.k; j++) {
+				super.ca[i][j] = this.rand.nextInt(this.v);
+			}
+		}
+	}
+
 	private static int computeNumRows(int t, int k, int v) {
 		double lllBound = Helper.computeLLLBound(t, k, v);
 		return (int)Math.ceil(lllBound);
