@@ -14,8 +14,11 @@
 
 package edu.asu.ca.kaushik.algorithms.structures;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 /*
  * Concrete implementation of CA interface used by Biased Density algorithms
@@ -137,5 +140,59 @@ public class ListCA implements PartialCA {
 	public Integer[] getRow(int i) {
 		assert(i < this.ca.size());
 		return this.ca.get(i);
+	}
+
+	public boolean isCovered(Interaction inter) {
+		int[] cols = inter.getCols().getCols();
+		int[] symbs = inter.getSyms().getSyms();
+		assert((cols.length == this.t) && (symbs.length == this.t));
+		boolean found = false;
+		boolean isThisRow;
+		for (Integer[] r : this.ca) {
+			isThisRow = true;
+			for (int j = 0; j < this.t; j++) {
+				if (r[cols[j]] != symbs[j]) {
+					isThisRow = false;
+					break;
+				}
+			}
+			if (isThisRow) {
+				found = true;
+				break;
+			}
+		}
+		return found;
+	}
+
+	public boolean isCompleteCA() {
+		ColGrIterator clGrIt = new ColGrLexIterator(this.t, this.k);
+		
+		clGrIt.rewind();
+		while(clGrIt.hasNext()){
+			ColGroup c = clGrIt.next();
+			if (!this.isAllCovered(c)) {
+				//System.out.println("uncovered interaction in coloumn group: " + c);
+				return false;
+			}
+		}
+		
+		return true;
+	}
+
+	private boolean isAllCovered(ColGroup c) {
+		int[] cols = c.getCols();
+		assert(cols.length == this.t);
+		int[] syms = new int[this.t];
+		Set<SymTuple> set = new HashSet<SymTuple>();
+		for (Integer[] r : this.ca) {
+			for (int j = 0; j < this.t; j++) {
+				syms[j] = r[cols[j]];
+			}
+			SymTuple symTup = new SymTuple(syms);
+			set.add(symTup);
+		}
+		
+		int vpowt = (int)Math.pow(this.v, this.t);
+		return (vpowt == set.size());
 	}
 }

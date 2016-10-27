@@ -82,7 +82,8 @@ public final class SymTuple {
 
 	@Override
 	public String toString() {
-		return "SymTuple [syms=" + Arrays.toString(syms) + "]";
+		//return "SymTuple [syms=" + Arrays.toString(syms) + "]";
+		return "SymTuple" + Arrays.toString(syms);
 	}
 
 }

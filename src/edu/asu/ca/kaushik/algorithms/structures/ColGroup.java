@@ -14,7 +14,9 @@
 
 package edu.asu.ca.kaushik.algorithms.structures;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 
 public final class ColGroup {
@@ -78,7 +80,8 @@ public final class ColGroup {
 
 	@Override
 	public String toString() {
-		return "ColGroup [cols=" + Arrays.toString(cols) + "]";
+		//return "ColGroup [cols=" + Arrays.toString(cols) + "]";
+		return "ColGroup" + Arrays.toString(cols);
 	}
 
 	public boolean intersects(ColGroup otherCols) {
@@ -173,8 +176,48 @@ public final class ColGroup {
 			}
 		}
 		return n;
+	}	
+	
+	public int[] union(int[] c) {
+		int l1 = len;
+		int l2 = c.length;
+		List<Integer> u = new ArrayList<Integer>();
+		int i = 0, j = 0;
+		while (i < l1 && j < l2) {
+			if (cols[i] < c[j]) {
+				u.add(cols[i]);
+				i++;
+			} else if (cols[i] == c[j]) {
+				u.add(cols[i]);
+				i++; j++;
+			} else {
+				u.add(c[j]);
+				j++;
+			}
+		}
+		if (i < l1) {
+			for (; i < l1; i++) {
+				u.add(cols[i]);
+			}
+		} else if (j < l2) {
+			for (; j < l2; j++) {
+				u.add(c[j]);
+			}
+		}
+		
+		int l = u.size();
+		int[] un = new int[l];
+		for (int k = 0; k < l; k++) {
+			un[k] = u.get(k);
+		}
+		return un;
 	}
 	
-	
+	public static void main(String[] args) {
+		int[] c1 = new int[]{1,2, 3};
+		int[] c2 = new int[]{0,1,3, 4};
+		ColGroup col = new ColGroup(c1);
+		System.out.println(Arrays.toString(col.union(c2)));
+	}
 
 }

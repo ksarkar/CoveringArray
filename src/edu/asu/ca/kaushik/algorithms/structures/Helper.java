@@ -17,6 +17,7 @@ package edu.asu.ca.kaushik.algorithms.structures;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.commons.math3.util.ArithmeticUtils;
 import org.apache.commons.math3.util.CombinatoricsUtils;
@@ -137,6 +138,34 @@ public class Helper {
 		double probUncov = 1 - (1 / vpowt);
 		return CombinatoricsUtils.binomialCoefficientDouble(k,t) * vpowt 
 				* Math.pow(probUncov, N);
+	}
+	
+	public static Integer[] constructRandRow(int k, int v, Random rand) {
+		Integer[] row = new Integer[k];
+		for (int i = 0 ; i < k; i++) {
+			row[i] = rand.nextInt(v);
+		}
+		
+		return row;
+	}
+	
+	public static int[] constructRandRow1(int k, int v, Random rand) {
+		int[] row = new int[k];
+		for (int i = 0 ; i < k; i++) {
+			row[i] = rand.nextInt(v);
+		}
+		
+		return row;
+	}
+
+	public static int[] constructMixedRandRow(int k, int[] v, Random rand) {
+		int[] row = new int[k];
+		
+		for (int i = 0 ; i < k; i++) {
+			row[i] = rand.nextInt(v[i]);
+		}
+		
+		return row;
 	}
 	
 }
